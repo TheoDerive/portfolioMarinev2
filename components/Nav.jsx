@@ -7,8 +7,10 @@ export default function Nav(){
         <nav class="nav-classic">
             <div></div>
             <section class="dynamique-island">
-                <img src="./assets/logo.png" alt="logo Marine" class="nav-classic-image" />
 
+                <a href="/"  onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}  class="nav-classic-image">
+                    <img src="/assets/logoMarineBlack.svg" alt="logo Marine" />
+                    </a>
                 <ul class="nav-classic-onglet-container">
                     <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} class="nav-classic-onglet"><a href="#">Acceuil</a></li>
                     <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} class="nav-classic-onglet"><a href="#">Projets</a></li>
