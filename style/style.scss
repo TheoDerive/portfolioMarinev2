@@ -1,0 +1,123 @@
+@import './libs/fonts.scss';
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: unset;
+    list-style-type: none;
+    text-decoration: none;
+    cursor: none;
+}
+
+html {
+    font-size: 18px;
+    font-family: 'Roca';
+}
+
+// Curseur
+
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 3px solid black;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: .2s ease-in-out;
+    transition-property: width, height, background-color, border-color;
+}
+
+// Navbar
+
+.nav-classic {
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 995;
+}
+
+.nav-classic-image {
+    width: 10%;
+}
+
+.dynamique-island {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 10px 50px;
+    width: 50%;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.nav-classic-onglet-container {
+    display: flex;
+    gap: 100px;
+}
+
+.nav-classic-onglet{
+    position: relative;
+}
+
+.nav-classic-onglet::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: black;
+    transition: width .3s ease-in-out;
+}
+
+.nav-classic-onglet:hover::after {
+    width: 50%;
+}
+
+.nav-classic-button {
+    padding: 20px 30px;
+    border: 1px solid black;
+    border-radius: 50px;
+    transition: all .3s ease-in-out;
+}
+
+.nav-classic-button:hover {
+    background-color: black;
+    color: white;
+}
+
+// Home Page
+
+// // Header 
+
+.background {
+    width: 100vw;
+    height: 100vh;
+}
+
+.titre {
+    font-size: 10rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: "Sego";
+    transform: translate(-50%, -50%);
+}
+
+.titre span {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: 400;
+    right: 30px;
+    bottom: -50px;
+    font-family: "Roca";
+}
