@@ -1,10 +1,10 @@
 import React from "react"
 
-export default function Competances(){
-    const [competances, setCompetances] = React.useState([])
+export default function Competences(){
+    const [competences, setCompetences] = React.useState([])
 
     React.useEffect(() => {
-        const getCompetances = async () => {
+        const getCompetences = async () => {
 
             // Récuration des compétances
             const response = await fetch('/api/get-competences')
@@ -13,23 +13,23 @@ export default function Competances(){
 
             console.log(response)
 
-            setCompetances(response)
+            setCompetences(response)
         }
 
-        getCompetances()
+        getCompetences()
     }, [])
 
     return (
-        <section id="competances">
+        <section id="competences">
 
 
-            <ul className="competances-homepage-container">
+            <ul className="competences-homepage-container">
                 {
-                    competances.map(competance => 
-                        <li className="competances-homepage" key={competance.id}>
-                            <img src={competance.image} alt={`${competance.name} image`} className="competance-homepage-image" />
+                    competences.map(competence => 
+                        <li className="competences-homepage" key={competence.id}>
+                            <img src={competence.image} alt={`${competence.name} image`} className="competence-homepage-image" />
 
-                            <span>{competance.name}</span>
+                            <span>{competence.name}</span>
                         </li>    
                     )
                 }
