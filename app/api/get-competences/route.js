@@ -2,9 +2,11 @@ import { connectToDB } from "@/utils/database";
 import Competences from "@/models/Competances";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic"
+
 export async function GET(req, res){
     await connectToDB()
-    
+
     try {
         const allCompetences = await Competences.find({})
         return NextResponse.json(allCompetences)

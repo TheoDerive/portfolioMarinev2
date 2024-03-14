@@ -7,7 +7,7 @@ export default function Competances(){
         const getCompetances = async () => {
 
             // Récuration des compétances
-            const response = await fetch('/api/get-competances')
+            const response = await fetch('/api/get-competences')
             .then(res => res.json())
             .then(data => data)
 
