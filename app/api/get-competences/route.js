@@ -1,5 +1,5 @@
 import { connectToDB } from "@/utils/database";
-import Competences from "@/models/Competances";
+import Competences from "@/models/Competences";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"

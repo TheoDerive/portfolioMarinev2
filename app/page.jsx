@@ -3,14 +3,14 @@
 import Nav from '@/components/Nav';
 import '../style/style.scss'
 import Header from '@/components/Header';
-import Competances from '@/components/Competances';
+import Competences from '@/components/Competences';
 
 export default function Home() {
   return (
     <>
       <Nav />
       <Header />
-      <Competances />
+      <Competences />
     </>
   );
 }
