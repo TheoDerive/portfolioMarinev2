@@ -11,6 +11,8 @@ export default function Competances(){
             .then(res => res.json())
             .then(data => data)
 
+            console.log(response)
+
             setCompetances(response)
         }
 

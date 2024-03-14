@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
-const competanceShema = new mongoose.Schema({
+const competenceShema = new mongoose.Schema({
     name: String,
     image: String,
 })
 
-const Competances = mongoose.models.Competances || mongoose.model('Competances', competanceShema)
+const Competences = mongoose.models.Competences || mongoose.model('Competences', competenceShema)
 
-module.exports = Competances
+module.exports = Competences
