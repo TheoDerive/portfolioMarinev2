@@ -1,4 +1,5 @@
 import React from "react"
+import { hoverElement, unHoverElement } from "./Cursor"
 
 export default function Competences(){
     const [competences, setCompetences] = React.useState([])
@@ -26,7 +27,7 @@ export default function Competences(){
             <ul className="competences-homepage-container">
                 {
                     competences.map(competence => 
-                        <li className="competences-homepage" key={competence.id}>
+                        <li className="competences-homepage" onMouseEnter={() => hoverElement('texts')} onMouseLeave={() => unHoverElement()} key={competence.id}>
                             <img src={competence.image} alt={`${competence.name} image`} className="competence-homepage-image" />
 
                             <span>{competence.name}</span>
