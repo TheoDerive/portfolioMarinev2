@@ -6,3 +6,32 @@
         top: 20px;
     }
 }
+
+@keyframes headerBackground {
+    0% {
+        scale: 5;
+    }
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes animationMarineName {
+    0%{
+        bottom: -50px;
+    }
+    100%{
+        bottom: 0px;
+    }
+}
+
+@keyframes scrollEnter {
+    0%{
+        bottom: unset;
+        top: -200%;
+    }
+    100%{
+        top: unset;
+        bottom: 30px;
+    }
+}

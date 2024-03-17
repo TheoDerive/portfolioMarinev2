@@ -1,24 +1,59 @@
 'use client'
 
+import React from "react";
 import { hoverElement, unHoverElement } from "./Cursor";
 
 export default function Nav(){
-    return(
-        <nav class="nav-classic">
-            <div></div>
-            <section class="dynamique-island">
+    const [isDynamique, setIsDynamique] = React.useState(true)
+    const [isOpen, setIsOpen] = React.useState(false)
 
-                <a href="/"  onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}  class="nav-classic-image">
+    React.useEffect(() => {
+        const navElement = document.querySelector('.nav-classic')
+        const competencesContainer = document.querySelector('#competences')
+        let checkout = false
+
+        function scrollNav(){
+            const offsetTop = competencesContainer.offsetTop
+            let pourcentage = ((window.scrollY - offsetTop) / window.innerHeight) * 100
+            console.log(pourcentage)
+
+            if(pourcentage > -10){
+                checkout = true
+
+                navElement.classList.add('nav-classic-scroll')
+                setIsDynamique(false)
+            }else{
+                navElement.classList.remove('nav-classic-scroll')
+                setIsDynamique(true)
+            }
+
+        }
+
+        window.addEventListener('scroll', scrollNav)
+
+        return () => {
+            window.removeEventListener('scroll', scrollNav)  
+        }
+    })
+
+
+    return(
+        <nav className="nav-classic">
+            <div></div>
+            <section className={isDynamique ? "dynamique-island" : 'normal-nav'}>
+
+                <a href="/"  onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}  className="nav-classic-image">
                     <img src="/assets/logoMarineBlack.svg" alt="logo Marine" />
-                    </a>
-                <ul class="nav-classic-onglet-container">
-                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} class="nav-classic-onglet"><a href="#">Acceuil</a></li>
-                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} class="nav-classic-onglet"><a href="#">Projets</a></li>
-                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} class="nav-classic-onglet"><a href="#">A propos</a></li>
+                </a>
+
+                <ul className={`nav-classic-onglet-container ${isOpen ? 'nav-classic-onglet-container-open' : null}`}>
+                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="#">Acceuil</a></li>
+                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="#">Projets</a></li>
+                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="#">A propos</a></li>
                 </ul>
             </section>
 
-            <a href="#" class="nav-classic-button" onMouseEnter={() => hoverElement('buttons')} onMouseLeave={() => unHoverElement()}>Contact</a>
+            <a href="#" className="nav-classic-button" onMouseEnter={() => hoverElement('buttons')} onMouseLeave={() => unHoverElement()}>Contact</a>
         </nav>
     )
 }

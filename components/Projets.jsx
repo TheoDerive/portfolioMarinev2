@@ -19,10 +19,8 @@ export function ProjetsHomepage(){
             const offsetTop = section.parentElement.offsetTop
             const scrollSection = section.querySelector('.scroll-projets')
             let pourcentage = ((window.scrollY - offsetTop) / window.innerHeight) * 100
-            console.log(pourcentage)
             pourcentage = pourcentage < 0 ? 0 : pourcentage > 200 ? 200 : pourcentage
             scrollSection.style.transform = `translate3d(${-(pourcentage)}vw, 0, 0)`
-            console.log(pourcentage)
         }
 
         function handleScroll(e) {
