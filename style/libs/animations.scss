@@ -27,11 +27,9 @@
 
 @keyframes scrollEnter {
     0%{
-        bottom: 0;
-        top: -200%;
+        bottom: 200%;
     }
     100%{
-        top: 0;
         bottom: 30px;
     }
 }
