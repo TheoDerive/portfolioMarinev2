@@ -1,6 +1,7 @@
 'use client'
 
 import React from "react"
+import { hoverElement, unHoverElement } from "./Cursor"
 
 export function ProjetsHomepage(){
 
@@ -18,7 +19,8 @@ export function ProjetsHomepage(){
             const offsetTop = section.parentElement.offsetTop
             const scrollSection = section.querySelector('.scroll-projets')
             let pourcentage = ((window.scrollY - offsetTop) / window.innerHeight) * 100
-            pourcentage = pourcentage < 0 ? 0 : pourcentage > 400 ? 400 : pourcentage
+            console.log(pourcentage)
+            pourcentage = pourcentage < 0 ? 0 : pourcentage > 200 ? 200 : pourcentage
             scrollSection.style.transform = `translate3d(${-(pourcentage)}vw, 0, 0)`
             console.log(pourcentage)
         }
@@ -44,7 +46,7 @@ export function ProjetsHomepage(){
                 <div className="scroll-projets">
 
                     {
-                        images.map(image => <article className="projet-homepage">
+                        images.map(image => <article className="projet-homepage" onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}>
                             <img src={image} alt="image"/>
                             <span> <span className="barre"></span> Photo Ombres / Lumières</span>
                         </article>)
