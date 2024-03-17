@@ -22,7 +22,7 @@ export default function Header(){
                 <span>Marine Sicaud</span>
             </h1>
 
-            <a href='#competances' className="scroll-down" onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}></a>
+            <a href='#projets' className="scroll-down" onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}></a>
         </header>
     )
 }
