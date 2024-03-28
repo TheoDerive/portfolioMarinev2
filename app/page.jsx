@@ -6,9 +6,10 @@ import Header from '@/components/Header';
 import Competences from '@/components/Competences';
 import { ProjetsHomepage } from '@/components/Projets';
 import Footer from '@/components/Footer';
-import Cursor from '@/components/Cursor';
+import React from 'react';
 
 export default function Home() {
+
   return (
     <>
       <Nav />

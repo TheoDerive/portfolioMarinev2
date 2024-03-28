@@ -46,8 +46,8 @@ export default function Nav(){
                 </a>
 
                 <ul className={`nav-classic-onglet-container ${isOpen ? 'nav-classic-onglet-container-open' : null}`}>
-                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="#">Acceuil</a></li>
-                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="#">Projets</a></li>
+                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="/">Acceuil</a></li>
+                    <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="/projets">Projets</a></li>
                     <li onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()} className="nav-classic-onglet"><a href="#">A propos</a></li>
                 </ul>
             </section>
