@@ -7,7 +7,7 @@ export default function Dashboard(){
     const [projetData, setProjetData] = React.useState({
         categoryName: '',
         projetName: '',
-        projetImage: File,
+        projetImage: '',
         projetDescription: '',
         projetDate: "",
         isLarge: false,
