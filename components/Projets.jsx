@@ -29,7 +29,6 @@ export function ProjetsHomepage(){
             });
             setProjets(array)
         }
-
         getAllCategories()
     }, [])
 
