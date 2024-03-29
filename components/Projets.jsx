@@ -27,7 +27,7 @@ export function ProjetsHomepage(){
                 })
 
             });
-            setProjets(array)
+            setProjets(array, projets)
         }
         getAllCategories()
     }, [])
