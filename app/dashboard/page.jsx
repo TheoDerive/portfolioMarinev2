@@ -1,8 +1,6 @@
 'use client'
 
 import React from "react"
-import axios from "axios"
-
 export default function Dashboard(){
     const [projetData, setProjetData] = React.useState({
         categoryName: '',
@@ -12,6 +10,11 @@ export default function Dashboard(){
         projetDate: "",
         isLarge: false,
         isTall: false
+    })
+
+    const [category, setCategory] = React.useState({
+        categoryName: "",
+        imageCategory: "",
     })
 
     const sendProject = async (e) => {
@@ -25,7 +28,25 @@ export default function Dashboard(){
             method: 'POST',
             body: formData
           })
-        const data = fetching.data
+        const data = await fetching.json()
+
+
+        console.log(data)
+
+    }
+
+    const sendCategory = async (e) => {
+        e.preventDefault()
+
+        const formData = new FormData();
+        formData.set('file', category.imageCategory);
+        formData.set('body', JSON.stringify(category));
+
+        const fetching = await fetch("/api/new-category", {
+            method: 'POST',
+            body: formData
+          })
+        const data = await fetching.json()
 
 
         console.log(data)
@@ -38,8 +59,8 @@ export default function Dashboard(){
                 <label htmlFor="category">
                     
                     <select name="category" onChange={(e) => setProjetData(prev => ({...prev, categoryName: e.target.value}))} id="category">
-                        <option value="test">Test</option>
-                        <option value="photographie">Photographie</option>
+                        <option value="Illustration">Illustration</option>
+                        <option value="Photographie">Photographie</option>
                     </select>
                 </label>
 
@@ -67,7 +88,20 @@ export default function Dashboard(){
                     <input type="checkbox" onChange={(e) => setProjetData(prev => ({...prev, isTall: e.target.checked}))}  name="isTall" />
                 </label>
 
-                <button onClick={(e) => sendProject(e)}>Send</button>
+                <button onClick={(e) => sendProject(e)}>Send Projet</button>
+            </form>
+
+            <form encType="multipart/form-data">
+
+                <label htmlFor="projetDescription">
+                    <input type="text" name="projetDescription" id="input" onChange={(e) => setCategory(prev => ({...prev, categoryName: e.target.value}))}/>
+                </label>
+
+                <label htmlFor="projetDate">
+                    <input type="file" onChange={(e) => setCategory(prev => ({...prev, imageCategory: e.target.files[0]}))}  name="projetDate" />
+                </label>
+
+                <button onClick={(e) => sendCategory(e)}>Send Category</button>
             </form>
         </>
     )

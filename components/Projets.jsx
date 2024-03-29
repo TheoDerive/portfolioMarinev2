@@ -4,6 +4,7 @@ import React from "react"
 import { hoverElement, unHoverElement } from "./Cursor"
 
 export function ProjetsHomepage(){
+    const [projets, setProjets] = React.useState([])
 
     let images = [
         "https://www.marine-sicaud.fr/assets/photo/londonRose.jpg",
@@ -12,7 +13,27 @@ export function ProjetsHomepage(){
         "https://www.marine-sicaud.fr/assets/photo/light.jpg",
     ]
 
+    React.useEffect(() => {
+        
+        async function getAllCategories(){
+            const array = []
+            const data = await fetch('/api/get-all-categories')
+            .then(response => response.json())
+            .then(datas => datas.data )
 
+            data.forEach(element => {
+                element.content.forEach(projet => {
+                    array.push(projet)
+                })
+
+            });
+            setProjets(array)
+        }
+
+        getAllCategories()
+    }, [])
+
+    // Get scroll position
     React.useEffect(() => {
 
         function transform(section){
@@ -44,9 +65,9 @@ export function ProjetsHomepage(){
                 <div className="scroll-projets">
 
                     {
-                        images.map(image => <article className="projet-homepage" onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}>
-                            <img src={image} alt="image"/>
-                            <span> <span className="barre"></span> Photo Ombres / Lumières</span>
+                        projets.map(projet => <article className="projet-homepage" onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}>
+                            <img src={projet.projetImage} alt="image"/>
+                            <span> <span className="barre"></span>{projet.projetName}</span>
                         </article>)
                     }
 
