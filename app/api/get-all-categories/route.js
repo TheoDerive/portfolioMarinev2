@@ -10,6 +10,7 @@ export async function GET(req, res){
     try {
         const categories = await Categories.find()
         return NextResponse.json({data: categories}) 
+
     } catch (error) {
         return NextResponse.json({message: 'Impossible de recuperer les projets'})
     }

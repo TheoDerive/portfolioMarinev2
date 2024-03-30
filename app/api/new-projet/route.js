@@ -18,14 +18,13 @@ export async function POST(req, res){
     const category = await Categories.findOne({name: body.categoryName})
     
     if(category){
-      
       const projetExist = category.content.find(element => element.projetName === body.projetName)
   
       if(!projetExist){
         const newProject = await new Projects({
           categoryName: body.categoryName,
           projetName: body.projetName,
-          projetImage:`/${body.categoryName}/${file.name}`,
+          projetImage:`/assets/${body.categoryName}/${file.name}`,
           projetDescription: body.projetDescription,
           projetDate: body.projetDate,
           isLarge: body.isLarge,
@@ -42,13 +41,12 @@ export async function POST(req, res){
             repo: "portfolioMarinev2",
             path: `public/assets/${body.categoryName}/${file.name}`,
             content: buffer,
-            message: "update test.txt",
+            message: `Ajout de ${file.name}`,
           })
 
           if(updated){
             try {
-              const test = await category.save()
-              console.log(test)
+              await category.save()
 
               return NextResponse.json({message: 'Votre projet à été ajouter'})
             } catch (error) {
@@ -61,8 +59,6 @@ export async function POST(req, res){
       }else {
         return NextResponse.json({message: `Votre projet existe déjà !`})
       }
-        
-
     }else {
         return NextResponse.json({message: `La catégorie de votre projet n'a pas été trouvé`})
     } 

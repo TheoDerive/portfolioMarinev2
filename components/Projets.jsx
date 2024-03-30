@@ -6,15 +6,7 @@ import { hoverElement, unHoverElement } from "./Cursor"
 export function ProjetsHomepage(){
     const [projets, setProjets] = React.useState([])
 
-    let images = [
-        "https://www.marine-sicaud.fr/assets/photo/londonRose.jpg",
-        "https://www.marine-sicaud.fr/assets/photo/light.jpg",
-        "https://www.marine-sicaud.fr/assets/photo/londonRose.jpg",
-        "https://www.marine-sicaud.fr/assets/photo/light.jpg",
-    ]
-
     React.useEffect(() => {
-        
         async function getAllCategories(){
             const array = []
             const data = await fetch('/api/get-all-categories')

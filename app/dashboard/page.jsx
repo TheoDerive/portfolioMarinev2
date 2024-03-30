@@ -2,6 +2,7 @@
 
 import React from "react"
 export default function Dashboard(){
+    const [categories, setCategories] = React.useState([])
     const [projetData, setProjetData] = React.useState({
         categoryName: '',
         projetName: '',
@@ -16,6 +17,18 @@ export default function Dashboard(){
         categoryName: "",
         imageCategory: "",
     })
+
+    React.useEffect(() => {
+        async function getAllCategories(){
+            const data = await fetch('/api/get-all-categories')
+            .then(response => response.json())
+            .then(datas => datas.data )
+
+
+            setCategories(data)
+        }
+        getAllCategories()
+    }, [])
 
     const sendProject = async (e) => {
         e.preventDefault()
@@ -51,6 +64,36 @@ export default function Dashboard(){
 
         console.log(data)
 
+    }
+
+    const removeCategory = async (e, nameCategory) => {
+        e.preventDefault()
+
+        const name = {name: nameCategory}
+
+        const fetching = await fetch('/api/remove-category', {
+            method: 'DELETE',
+            body: JSON.stringify(name)
+        })
+
+        const data = await fetching.json()
+
+        console.log(data)
+    }
+
+    const removeProjet = async (e, nameCategory, nameProjet) => {
+        e.preventDefault()
+
+        const name = {categorieName: nameCategory, projetName: nameProjet}
+
+        const fetching = await fetch('/api/remove-projet', {
+            method: 'DELETE',
+            body: JSON.stringify(name)
+        })
+
+        const data = await fetching.json()
+
+        console.log(data)
     }
 
     return(
@@ -103,6 +146,28 @@ export default function Dashboard(){
 
                 <button onClick={(e) => sendCategory(e)}>Send Category</button>
             </form>
+
+            <br/>
+            <br/>
+            <br/>
+
+            {
+                categories.map(deleteCategory => <>
+                    <p>{deleteCategory.name}</p>
+                    <button onClick={(e) => removeCategory(e, deleteCategory.name)}>Remove {deleteCategory.name}</button>
+
+                    <ul>
+
+                        {
+                            deleteCategory.content.map(deleteProjet => <li>
+                                <p>{deleteProjet.projetName}</p>
+                                <button onClick={(e) => removeProjet(e, deleteCategory.name, deleteProjet.projetName)}>Remove {deleteProjet.projetName}</button>
+                            </li>)
+                        }
+
+                    </ul>
+                </>)
+            }
         </>
     )
 }
