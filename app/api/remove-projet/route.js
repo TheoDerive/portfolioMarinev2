@@ -12,8 +12,8 @@ export async function DELETE(req, res){
         const newArray = category.content.filter(projet => projet.projetName !== body.projetName)
 
         await Categories.findOneAndUpdate({name: body.categorieName}, {content: newArray})
-        return NextResponse.json({message: "Votre categorie a bien été supprimer..."})
+        return NextResponse.json({message: "Votre projet a bien été supprimer..."})
     } catch (error) {
-        return NextResponse.json({message: "Votre categorie n'a pas pu été supprimer..."})
+        return NextResponse.json({message: "Votre projet n'a pas pu été supprimer..."})
     }
 }
