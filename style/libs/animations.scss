@@ -33,3 +33,18 @@
         bottom: 30px;
     }
 }
+
+@keyframes scrollProjet1 {
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scrollProjet2 {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}

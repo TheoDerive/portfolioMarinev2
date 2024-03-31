@@ -19,7 +19,7 @@ export function ProjetsHomepage(){
                 })
 
             });
-            setProjets(array, projets)
+            setProjets(array.slice(0, 4))
         }
         getAllCategories()
     }, [])
