@@ -11,13 +11,11 @@ export function ProjetsSlider({ projetsArray }) {
       const scrollSection = section.querySelector(".scroll-projets");
       let pourcentage =
         ((window.scrollY - offsetTop) / window.innerHeight) * 100;
-      console.log(pourcentage);
-      pourcentage =
-        pourcentage < 0
-          ? 0
-          : pourcentage > (projetsArray.length - 1) * 100 + 20
-            ? (projetsArray.length - 1) * 100 + 20
-            : pourcentage;
+      pourcentage < 0
+        ? 0
+        : pourcentage > (projetsArray.length - 1) * 100 + 20
+          ? (projetsArray.length - 1) * 100 + 20
+          : pourcentage;
       scrollSection.style.transform = `translate3d(${-pourcentage}vw, 0, 0)`;
     }
 
