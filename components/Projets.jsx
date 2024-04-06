@@ -1,69 +1,67 @@
-'use client'
+"use client";
 
-import React from "react"
-import { hoverElement, unHoverElement } from "./Cursor"
+import React from "react";
+import { hoverElement, unHoverElement } from "./Cursor";
 
-export function ProjetsHomepage(){
-    const [projets, setProjets] = React.useState([])
+export function ProjetsSlider({ projetsArray }) {
+  // Get scroll position
+  React.useEffect(() => {
+    function transform(section) {
+      const offsetTop = section.parentElement.offsetTop;
+      const scrollSection = section.querySelector(".scroll-projets");
+      let pourcentage =
+        ((window.scrollY - offsetTop) / window.innerHeight) * 100;
+      console.log(pourcentage);
+      pourcentage =
+        pourcentage < 0
+          ? 0
+          : pourcentage > (projetsArray.length - 1) * 100 + 20
+            ? (projetsArray.length - 1) * 100 + 20
+            : pourcentage;
+      scrollSection.style.transform = `translate3d(${-pourcentage}vw, 0, 0)`;
+    }
 
-    React.useEffect(() => {
-        async function getAllCategories(){
-            const array = []
-            const data = await fetch('/api/get-all-categories')
-            .then(response => response.json())
-            .then(datas => datas.data )
+    function handleScroll() {
+      const stickySection = document.querySelector(".projets");
 
-            data.forEach(element => {
-                element.content.forEach(projet => {
-                    array.push(projet)
-                })
+      transform(stickySection);
+    }
 
-            });
-            setProjets(array.slice(0, 4))
-        }
-        getAllCategories()
-    }, [])
+    window.addEventListener("scroll", handleScroll);
 
-    // Get scroll position
-    React.useEffect(() => {
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [projetsArray]);
 
-        function transform(section){
-            const offsetTop = section.parentElement.offsetTop
-            const scrollSection = section.querySelector('.scroll-projets')
-            let pourcentage = ((window.scrollY - offsetTop) / window.innerHeight) * 100
-            pourcentage = pourcentage < 0 ? 0 : pourcentage > 200 ? 200 : pourcentage
-            scrollSection.style.transform = `translate3d(${-(pourcentage)}vw, 0, 0)`
-        }
-
-        function handleScroll(e) {
-            const stickySection = document.querySelector('.projets')
-
-            transform(stickySection)
-        }
-
-
-        window.addEventListener('scroll', handleScroll)
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
-    }, [])
-
-
-    return (
-        <section id="projets" className="projets-container">
-            <div className="projets">
-                <div className="scroll-projets">
-
-                    {
-                        projets.map(projet => <article className="projet-homepage" onMouseEnter={() => hoverElement('links')} onMouseLeave={() => unHoverElement()}>
-                            <img src={projet.projetImage} alt="image"/>
-                            <span> <span className="barre"></span>{projet.projetName}</span>
-                        </article>)
-                    }
-
-                </div>
-            </div>
-        </section>
-    )
+  return (
+    <section
+      id="projets"
+      className="projets-container"
+      style={{ height: `${projetsArray.length * 100 + 50}vh` }}
+    >
+      <div className="projets">
+        <div
+          className="scroll-projets"
+          style={{ width: `${projetsArray.length * 100}vw` }}
+        >
+          {projetsArray.map((projet) => (
+            <article
+              className="projet"
+              onMouseEnter={() => hoverElement("links")}
+              onMouseLeave={() => unHoverElement()}
+            >
+              <img src={projet.projetImage} alt="image" />
+              <span>
+                {" "}
+                <span className="barre"></span>
+                {projet.projetName}
+              </span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
+
