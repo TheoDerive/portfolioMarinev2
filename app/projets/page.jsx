@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 import "../../style/style.scss";
 import { hoverElement, unHoverElement } from "@/components/Cursor";
@@ -8,8 +8,10 @@ import { ProjetsSlider } from "@/components/Projets";
 
 export default function Projets() {
   const [categorieSelect, setCategoriesSelect] = React.useState(null);
-  const [projets, setProjets] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
+  const [projets, setProjets] = React.useState([]);
+  const [projetSelect, setProjetSelect] = useState(null);
+  const [scrollCategories, setScrollCategories] = React.useState(0);
   const [scroll, setScroll] = React.useState(0);
   const [close, setClose] = React.useState({
     categorieSlider: false,
@@ -17,6 +19,7 @@ export default function Projets() {
   });
 
   const projetsSliderRef = React.useRef();
+  const projetRef = React.useRef();
 
   React.useEffect(() => {
     document.querySelector("html").style.overflow = "hidden";
@@ -28,8 +31,31 @@ export default function Projets() {
 
       setCategories(data);
 
-      console.log(data);
+      if (window.localStorage.getItem("projet")) getProjet();
     }
+
+    function getProjet() {
+      const projet = JSON.parse(window.localStorage.getItem("projet"));
+
+      for (let i = 0; i < categories.length; i++) {
+        const element = categories[i];
+
+        if (element.name === projet.categoryName) {
+          setScrollCategories(i);
+        }
+      }
+
+      document.querySelector("html").style.overflowY = "scroll";
+      console.log(projet.categoryName);
+      setCategoriesSelect(projet.categoryName);
+      setTimeout(() => {
+        handleProjet(projet, projetsSliderRef.current.offsetTop);
+      }, 500);
+      setTimeout(() => {
+        setClose((prev) => ({ ...prev, categorieSlider: true }));
+      }, 1000);
+    }
+
     getAllCategories();
   }, []);
 
@@ -39,11 +65,40 @@ export default function Projets() {
         categories.find((categorie) => categorie.name === categorieSelect)
           .content,
       );
+    } else {
+      setProjets([]);
     }
   }, [categorieSelect]);
 
+  useEffect(() => console.log(categories), [categories]);
+
+  function leftCategorie() {
+    console.log("categorie");
+    setClose((prev) => ({ ...prev, categorieSlider: false }));
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      document.querySelector("html").style.overflow = "hidden";
+      setCategoriesSelect(null);
+    }, 1000);
+  }
+
+  function leftProjet() {
+    window.scrollTo(0, scroll);
+    setTimeout(() => {
+      setProjetSelect(null);
+    }, 500);
+  }
+
+  function handleProjet(projet, scroll) {
+    setProjetSelect(projet);
+    setScroll(scroll);
+    setTimeout(() => {
+      window.scrollTo(0, projetRef.current.offsetTop);
+    }, 100);
+  }
+
   return (
-    <>
+    <Suspense fallback={<p>Test</p>}>
       <nav>
         <a
           href="/"
@@ -57,9 +112,9 @@ export default function Projets() {
           onMouseEnter={() => hoverElement("texts")}
           onMouseLeave={() => unHoverElement()}
           onClick={() =>
-            scroll === categories.length - 1
-              ? setScroll(0)
-              : setScroll((prev) => prev + 1)
+            scrollCategories === categories.length - 1
+              ? setScrollCategories(0)
+              : setScrollCategories((prev) => prev + 1)
           }
         ></button>
         <button
@@ -67,9 +122,9 @@ export default function Projets() {
           onMouseEnter={() => hoverElement("texts")}
           onMouseLeave={() => unHoverElement()}
           onClick={() =>
-            scroll <= 0
-              ? setScroll(categories.length - 1)
-              : setScroll((prev) => prev - 1)
+            scrollCategories <= 0
+              ? setScrollCategories(categories.length - 1)
+              : setScrollCategories((prev) => prev - 1)
           }
         ></button>
       </nav>
@@ -81,7 +136,7 @@ export default function Projets() {
           className="projects-page-container"
           onMouseEnter={() => hoverElement("buttons")}
           onMouseLeave={() => unHoverElement()}
-          style={{ transform: `translateX(-${scroll * 100}vw)` }}
+          style={{ transform: `translateX(-${scrollCategories * 100}vw)` }}
         >
           {categories.map((categorie) => (
             <article
@@ -154,21 +209,33 @@ export default function Projets() {
             {close.categorieSlider && (
               <span
                 className="close-projets-slider"
-                onClick={() => {
-                  setClose((prev) => ({ ...prev, categorieSlider: false }));
-                  window.scrollTo(0, 0);
-                  document.querySelector("html").style.overflow = "hidden";
-                  setTimeout(() => {
-                    setCategoriesSelect(null);
-                  }, 500);
-                }}
+                onClick={() =>
+                  projetRef.current &&
+                  window.scrollY >= projetRef.current.offsetTop
+                    ? leftProjet()
+                    : leftCategorie()
+                }
               ></span>
             )}
-            <ProjetsSlider projetsArray={projets} />
+            <ProjetsSlider projetsArray={projets} handleProjet={handleProjet} />
+          </section>
+        )}
+
+        {projetSelect && (
+          <section ref={projetRef} className="projet-page-container">
+            <section className="projet-page-image">
+              <img src={projetSelect.projetImage} />
+              <img src={projetSelect.projetImage} />
+              <img src={projetSelect.projetImage} />
+            </section>
+
+            <section className="projet-page-texte">
+              <h2>{projetSelect.projetName}</h2>
+              <p>{projetSelect.projetDescription}</p>
+            </section>
           </section>
         )}
       </main>
-    </>
+    </Suspense>
   );
 }
-

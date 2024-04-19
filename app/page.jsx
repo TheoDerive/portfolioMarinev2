@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Competences from "@/components/Competences";
 import { ProjetsSlider } from "@/components/Projets";
 import Footer from "@/components/Footer";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Home() {
   const [projets, setProjets] = React.useState([]);
@@ -23,17 +23,22 @@ export default function Home() {
           array.push(projet);
         });
       });
-      setProjets(array.slice(0, 3));
+      setProjets(array.slice(0, 4));
     }
     getAllCategories();
   }, []);
+
+  function clickHomeProjet(projet) {
+    window.localStorage.setItem("projet", JSON.stringify(projet));
+    window.location.pathname = "/projets";
+  }
 
   return (
     <>
       <Nav />
       <Header />
       <Competences />
-      <ProjetsSlider projetsArray={projets} />
+      <ProjetsSlider projetsArray={projets} handleProjet={clickHomeProjet} />
       <Footer />
     </>
   );

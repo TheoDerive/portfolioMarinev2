@@ -3,7 +3,7 @@
 import React from "react";
 import { hoverElement, unHoverElement } from "./Cursor";
 
-export function ProjetsSlider({ projetsArray }) {
+export function ProjetsSlider({ projetsArray, handleProjet = null }) {
   // Get scroll position
   React.useEffect(() => {
     function transform(section) {
@@ -48,6 +48,9 @@ export function ProjetsSlider({ projetsArray }) {
               className="projet"
               onMouseEnter={() => hoverElement("links")}
               onMouseLeave={() => unHoverElement()}
+              onClick={() =>
+                handleProjet ? handleProjet(projet, window.scrollY) : null
+              }
             >
               <img src={projet.projetImage} alt="image" />
               <span>
@@ -62,4 +65,3 @@ export function ProjetsSlider({ projetsArray }) {
     </section>
   );
 }
-

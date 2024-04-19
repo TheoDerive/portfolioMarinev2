@@ -22,6 +22,13 @@ html {
   overflow: hidden !important;
 }
 
+html,
+body,
+canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
 // Curseur
 
 .cursor {
@@ -422,6 +429,7 @@ footer {
   padding-left: 15vw;
   gap: 20px;
   padding-right: 15vw;
+  padding-bottom: 10px;
 
   .links-footer {
     display: flex;
@@ -568,7 +576,7 @@ footer {
       width: 50px;
       height: 50px;
       top: 50px;
-      left: 50px;
+      right: 50px;
 
       &::after {
         content: "";
@@ -595,3 +603,35 @@ footer {
   }
 }
 
+/* Projet section page Projets */
+
+.projet-page-container {
+  padding: 10px;
+  width: 100vw;
+  display: grid;
+  grid: auto / 1fr 1fr;
+  align-items: start;
+  justify-content: center;
+  gap: 10px;
+
+  .projet-page-image {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    img {
+      width: 95%;
+    }
+  }
+
+  .projet-page-texte {
+    width: 100%;
+    position: sticky;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
