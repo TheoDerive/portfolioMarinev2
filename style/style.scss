@@ -107,6 +107,37 @@ canvas {
   }
 }
 
+.close-black {
+  z-index: 100;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 100%;
+    height: 2px;
+    background-color: black;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) rotate(135deg);
+    width: 100%;
+    height: 2px;
+    background-color: black;
+  }
+}
+
 .next {
   z-index: 100;
   width: 50px;
@@ -610,7 +641,7 @@ footer {
   width: 100vw;
   display: grid;
   grid: auto / 1fr 1fr;
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
   gap: 10px;
 
@@ -633,5 +664,227 @@ footer {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  }
+}
+
+// Dashboard
+
+.dashboard-page {
+  width: 100vw;
+  padding: 20px;
+  overflow-x: hidden;
+
+  .all-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    .categorie-container {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .categorie-information,
+    .projet-information {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      h2,
+      h3 {
+        margin-right: 20px;
+      }
+    }
+
+    .caroussel-container {
+      width: 100vw;
+      padding-bottom: 35px;
+      overflow-x: auto !important;
+    }
+
+    .categorie-content-container {
+      display: flex;
+      gap: 100px;
+
+      .projet-container {
+        height: fit-content;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+
+        .projet-image {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+// Modification projet / Categories
+
+.new-projet-container,
+.new-category-container,
+.update-projet-container,
+.update-category-container,
+.verif-remove {
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30vw;
+  gap: 40px;
+
+  input[type="text"] {
+    padding: 7px;
+    border: 1px solid black;
+    outline: 0;
+    border-radius: 10px;
+    width: 70%;
+  }
+
+  .send {
+    width: 50%;
+    background: transparent;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    transition: 0.5s;
+
+    &:hover {
+      background: black;
+      color: white;
+    }
+  }
+}
+
+.projet-container {
+  position: relative;
+
+  .updateButton {
+    position: absolute;
+    bottom: -35px;
+    left: 5px;
+  }
+
+  .remove {
+    position: absolute;
+    bottom: -35px;
+    left: 50px;
+  }
+}
+
+.new {
+  padding: 7px 10px 5px 12px;
+  border: 0;
+  font-size: 1rem;
+  background: transparent;
+  color: #229b22;
+  border-radius: 10px;
+  transition: 0.5s ease-in-out;
+  font-weight: bold;
+
+  &:hover {
+    background: #229b22;
+    color: white;
+  }
+}
+
+.updateButton {
+  padding: 7px 10px 5px 12px;
+  border: 0;
+  font-size: 1rem;
+  background: transparent;
+  color: #489dc8;
+  border-radius: 10px;
+  transition: 0.5s ease-in-out;
+  font-weight: bold;
+
+  &:hover {
+    background: #489dc8;
+    color: white;
+  }
+}
+
+.remove {
+  padding: 7px 10px 5px 12px;
+  border: 0;
+  font-size: 1rem;
+  background: transparent;
+  color: red;
+  border-radius: 10px;
+  transition: 0.5s ease-in-out;
+  font-weight: bold;
+
+  &:hover {
+    background: red;
+    color: white;
+  }
+}
+
+// // Popup
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50vw;
+  z-index: 100;
+  padding: 20px;
+  transition: opacity 0.3s;
+  border-radius: 20px;
+
+  .information {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+  }
+}
+
+// // Password
+
+.password-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100vw;
+  height: 100vh;
+
+  input[type="password"] {
+    padding: 7px;
+    border: 1px solid black;
+    outline: 0;
+    border-radius: 10px;
+    width: 40%;
+    font-size: 1rem;
+  }
+
+  .send {
+    width: 20%;
+    background: transparent;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    transition: 0.5s;
+
+    &:hover {
+      background: black;
+      color: white;
+    }
   }
 }

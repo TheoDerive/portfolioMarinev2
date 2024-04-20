@@ -53,6 +53,7 @@ export default function Projets() {
       }, 500);
       setTimeout(() => {
         setClose((prev) => ({ ...prev, categorieSlider: true }));
+        window.localStorage.removeItem("projet");
       }, 1000);
     }
 
@@ -224,9 +225,9 @@ export default function Projets() {
         {projetSelect && (
           <section ref={projetRef} className="projet-page-container">
             <section className="projet-page-image">
-              <img src={projetSelect.projetImage} />
-              <img src={projetSelect.projetImage} />
-              <img src={projetSelect.projetImage} />
+              {projetSelect.projetImage.map((image) => (
+                <img src={image} />
+              ))}
             </section>
 
             <section className="projet-page-texte">

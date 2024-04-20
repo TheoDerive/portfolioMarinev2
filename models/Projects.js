@@ -1,15 +1,17 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema({
-    categoryName: String,
-    projetName: String,
-    projetImage: String,
-    projetDescription: String,
-    projetDate: String,
-    isLarge: Boolean,
-    isTall: Boolean
-})
+  categoryName: String,
+  projetName: String,
+  projetImage: { type: Array },
+  projetDescription: String,
+  projetDate: String,
+  isLarge: Boolean,
+  isTall: Boolean,
+});
 
-const Projects = mongoose.models.Projects || mongoose.model('Projects', projectSchema)
+const Projects =
+  mongoose.models.Projects || mongoose.model("Projects", projectSchema);
 
-module.exports = Projects
+module.exports = Projects;
+

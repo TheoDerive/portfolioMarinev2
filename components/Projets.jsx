@@ -52,7 +52,7 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
                 handleProjet ? handleProjet(projet, window.scrollY) : null
               }
             >
-              <img src={projet.projetImage} alt="image" />
+              <img src={projet.projetImage[0]} alt="image" />
               <span>
                 {" "}
                 <span className="barre"></span>

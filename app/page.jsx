@@ -7,6 +7,7 @@ import Competences from "@/components/Competences";
 import { ProjetsSlider } from "@/components/Projets";
 import Footer from "@/components/Footer";
 import React, { useState } from "react";
+import Popup from "@/components/Popup";
 
 export default function Home() {
   const [projets, setProjets] = React.useState([]);
@@ -35,6 +36,7 @@ export default function Home() {
 
   return (
     <>
+      <Popup data={{ ok: false }} />
       <Nav />
       <Header />
       <Competences />
