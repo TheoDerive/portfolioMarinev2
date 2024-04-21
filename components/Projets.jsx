@@ -4,9 +4,12 @@ import React from "react";
 import { hoverElement, unHoverElement } from "./Cursor";
 
 export function ProjetsSlider({ projetsArray, handleProjet = null }) {
+  const [scrollY, setScrollY] = React.useState(0);
+
   // Get scroll position
   React.useEffect(() => {
     function transform(section) {
+      setScrollY(window.scrollY);
       const offsetTop = section.parentElement.offsetTop;
       const scrollSection = section.querySelector(".scroll-projets");
       let pourcentage =
@@ -53,7 +56,7 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
               onMouseEnter={() => hoverElement("links")}
               onMouseLeave={() => unHoverElement()}
               onClick={() =>
-                handleProjet ? handleProjet(projet, window.scrollY) : null
+                handleProjet ? handleProjet(projet, scrollY) : null
               }
             >
               <img src={projet.projetImage[0]} alt="image" />

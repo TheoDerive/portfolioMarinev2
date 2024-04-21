@@ -6,8 +6,11 @@ import { hoverElement, unHoverElement } from "./Cursor";
 export default function Nav() {
   const [isDynamique, setIsDynamique] = React.useState(true);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [windowWidth, setWindowWidth] = React.useState(0);
 
   React.useEffect(() => {
+    setWindowWidth(window.innerWidth);
+
     const navElement = document.querySelector(".nav-classic");
     const competencesContainer = document.querySelector("#competences");
     let checkout = false;
@@ -40,9 +43,7 @@ export default function Nav() {
       <div></div>
       <section
         className={
-          isDynamique && window.innerWidth >= 1024
-            ? "dynamique-island"
-            : "normal-nav"
+          isDynamique && windowWidth >= 1024 ? "dynamique-island" : "normal-nav"
         }
       >
         <a
@@ -59,7 +60,7 @@ export default function Nav() {
             isOpen ? "nav-classic-onglet-container-open" : null
           }`}
         >
-          {window.innerWidth <= 768 ? (
+          {windowWidth <= 768 ? (
             <span
               className="close-black"
               style={{ left: "unset", right: "30px" }}
@@ -90,7 +91,7 @@ export default function Nav() {
         </ul>
       </section>
 
-      {window.innerWidth <= 768 ? (
+      {windowWidth <= 768 ? (
         <span
           className="burger"
           style={{ left: "unset", right: "30px" }}

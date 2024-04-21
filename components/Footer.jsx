@@ -5,20 +5,9 @@ import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import React from "react";
 
 export default function Footer() {
-  const elementRef = React.useRef(null);
-  const [elementSize, setElementSize] = React.useState({ width: 0 });
-
-  React.useEffect(() => {
-    const element = elementRef.current;
-    if (element) {
-      const { width } = element.getBoundingClientRect();
-      setElementSize({ width });
-    }
-  }, [elementRef]);
-
   return (
     <footer>
-      <section className="links-footer" ref={elementRef}>
+      <section className="links-footer">
         <ul className="link-footer-container">
           <h3 className="name-link-categorie">Pages :</h3>
           <li
@@ -131,4 +120,3 @@ export default function Footer() {
     </footer>
   );
 }
-

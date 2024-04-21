@@ -6,8 +6,7 @@ import Header from "@/components/Header";
 import Competences from "@/components/Competences";
 import { ProjetsSlider } from "@/components/Projets";
 import Footer from "@/components/Footer";
-import React, { useState } from "react";
-import Popup from "@/components/Popup";
+import React from "react";
 
 export default function Home() {
   const [projets, setProjets] = React.useState([]);
@@ -36,6 +35,8 @@ export default function Home() {
   }, []);
 
   function clickHomeProjet(projet) {
+    if (typeof window === undefined) return;
+
     window.localStorage.setItem("projet", JSON.stringify(projet));
     window.location.pathname = "/projets";
   }
