@@ -11,6 +11,8 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
       const scrollSection = section.querySelector(".scroll-projets");
       let pourcentage =
         ((window.scrollY - offsetTop) / window.innerHeight) * 100;
+
+      console.log(pourcentage);
       pourcentage < 0
         ? 0
         : pourcentage > (projetsArray.length - 1) * 100 + 20
@@ -26,9 +28,11 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
     }
 
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("touchmove", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
     };
   }, [projetsArray]);
 

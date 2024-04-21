@@ -24,6 +24,12 @@ export default function Home() {
           array.push(projet);
         });
       });
+      array.sort((a, b) => {
+        const dateA = new Date(a.projetDate);
+        const dateB = new Date(b.projetDate);
+        return dateB - dateA;
+      });
+
       setProjets(array.slice(0, 4));
     }
     getAllCategories();
@@ -36,7 +42,6 @@ export default function Home() {
 
   return (
     <>
-      <Popup data={{ ok: false }} />
       <Nav />
       <Header />
       <Competences />

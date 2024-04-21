@@ -1,5 +1,6 @@
 @import "./libs/fonts.scss";
 @import "./libs/animations.scss";
+@import "./libs/breakpoints.scss";
 
 * {
   padding: 0;
@@ -10,6 +11,10 @@
   text-decoration: none;
   cursor: none;
   font-family: "Roca";
+
+  @include media-max("desktop-up") {
+    cursor: unset !important;
+  }
 }
 
 html {
@@ -45,19 +50,29 @@ canvas {
   pointer-events: none;
   transition: 0.2s ease-in-out;
   transition-property: width, height, background-color, border-color;
+
+  @include media-max("desktop-up") {
+    display: none;
+  }
 }
 
 // Navbar
 
 .nav-classic {
-  width: 100%;
+  width: 100vw;
   padding: 20px 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 995;
   transition: all 0.3s ease-in-out;
+
+  @include media-max("desktop-up") {
+    padding: 20px 15px 20px 40px;
+  }
 
   &-scroll {
     backdrop-filter: blur(15px);
@@ -231,6 +246,10 @@ canvas {
   align-items: center;
   transition: all 0.3s ease-in-out;
 
+  @include media-max("desktop-up") {
+    padding: 0px;
+  }
+
   .nav-classic-image {
     width: 50px;
     height: 50px;
@@ -253,6 +272,54 @@ canvas {
 .nav-classic-onglet-container {
   display: flex;
   gap: 100px;
+
+  @include media-max("desktop-up") {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 60vw;
+    height: 100vh;
+    padding: 30px;
+    transform: translateX(150%);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background: white;
+    display: flex;
+    align-items: flex-start !important;
+    flex-direction: column;
+    z-index: 999;
+    justify-content: center;
+    transition: transform 0.5s ease-in-out;
+
+    &-open {
+      transform: translateX(0%) !important;
+    }
+  }
+}
+
+.burger {
+  width: 40px;
+  height: 40px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: black;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 60%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: black;
+  }
 }
 
 .nav-classic-onglet {
@@ -291,12 +358,22 @@ canvas {
 
 // // Header
 
+header {
+  width: 100vw;
+  height: 100vh;
+}
+
 .background {
   width: 100vw;
   height: 100vh;
   scale: 4;
   animation: headerBackground 2s forwards;
   animation-delay: 1s;
+  width: 100vw;
+
+  @include media-max("desktop-up") {
+    display: none;
+  }
 }
 
 .titre {
@@ -308,6 +385,10 @@ canvas {
   transform: translate(-50%, -50%);
   padding-bottom: 50px;
   overflow: hidden;
+
+  @include media-max("desktop-up") {
+    font-size: 3.5rem;
+  }
 }
 
 .titre span {
@@ -372,6 +453,13 @@ canvas {
     gap: 50px;
     width: 100%;
     padding: 20px 100px;
+
+    @include media-max("desktop-up") {
+      padding: 0 10px 0 35px;
+      display: grid;
+      grid: auto / 1fr 1fr 1fr;
+      gap: 25px;
+    }
   }
 
   .competences-homepage {
@@ -419,14 +507,26 @@ canvas {
   justify-content: space-between;
   padding: 0 5vw;
 
+  @include media-max("desktop-up") {
+    gap: 50px;
+  }
+
   .projet {
     display: flex;
     align-items: flex-start;
     gap: 30px;
 
+    @include media-max("desktop-up") {
+      flex-direction: column;
+    }
+
     img {
       width: 400px;
       height: 80%;
+
+      @include media-max("desktop-up") {
+        width: 350px;
+      }
     }
 
     span {
@@ -470,11 +570,20 @@ footer {
     padding-bottom: 20px;
     gap: 15vw;
 
+    @include media-max("desktop-up") {
+      flex-direction: column;
+      align-items: center;
+    }
+
     .link-footer-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 5px;
+
+      @include media-max("desktop-up") {
+        align-items: center;
+      }
 
       .name-link-categorie {
         font-family: "Sego";
@@ -506,6 +615,10 @@ footer {
   .social-container {
     display: flex;
     gap: 30px;
+
+    @include media-max("desktop-up") {
+      justify-content: center;
+    }
 
     .image-container-footer {
       width: 50px;
@@ -657,13 +770,15 @@ footer {
   }
 
   .projet-page-texte {
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
     position: sticky;
-    top: 50%;
+    top: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 20px;
   }
 }
 

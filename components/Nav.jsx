@@ -38,7 +38,13 @@ export default function Nav() {
   return (
     <nav className="nav-classic">
       <div></div>
-      <section className={isDynamique ? "dynamique-island" : "normal-nav"}>
+      <section
+        className={
+          isDynamique && window.innerWidth >= 1024
+            ? "dynamique-island"
+            : "normal-nav"
+        }
+      >
         <a
           href="/"
           onMouseEnter={() => hoverElement("links")}
@@ -49,8 +55,17 @@ export default function Nav() {
         </a>
 
         <ul
-          className={`nav-classic-onglet-container ${isOpen ? "nav-classic-onglet-container-open" : null}`}
+          className={`nav-classic-onglet-container ${
+            isOpen ? "nav-classic-onglet-container-open" : null
+          }`}
         >
+          {window.innerWidth <= 768 ? (
+            <span
+              className="close-black"
+              style={{ left: "unset", right: "30px" }}
+              onClick={() => setIsOpen(false)}
+            ></span>
+          ) : null}
           <li
             onMouseEnter={() => hoverElement("links")}
             onMouseLeave={() => unHoverElement()}
@@ -75,15 +90,22 @@ export default function Nav() {
         </ul>
       </section>
 
-      <a
-        href="#"
-        className="nav-classic-button"
-        onMouseEnter={() => hoverElement("buttons")}
-        onMouseLeave={() => unHoverElement()}
-      >
-        Contact
-      </a>
+      {window.innerWidth <= 768 ? (
+        <span
+          className="burger"
+          style={{ left: "unset", right: "30px" }}
+          onClick={() => setIsOpen(true)}
+        ></span>
+      ) : (
+        <a
+          href="#"
+          className="nav-classic-button"
+          onMouseEnter={() => hoverElement("buttons")}
+          onMouseLeave={() => unHoverElement()}
+        >
+          Contact
+        </a>
+      )}
     </nav>
   );
 }
-
