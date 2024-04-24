@@ -32,6 +32,7 @@ export default function Projets() {
       setCategories(data);
 
       if (window.localStorage.getItem("projet")) getProjet();
+      if (window.localStorage.getItem("category")) getCategory();
     }
 
     function getProjet() {
@@ -46,7 +47,6 @@ export default function Projets() {
       }
 
       document.querySelector("html").style.overflowY = "scroll";
-      console.log(projet.categoryName);
       setCategoriesSelect(projet.categoryName);
       setTimeout(() => {
         handleProjet(projet, projetsSliderRef.current.offsetTop);
@@ -54,6 +54,28 @@ export default function Projets() {
       setTimeout(() => {
         setClose((prev) => ({ ...prev, categorieSlider: true }));
         window.localStorage.removeItem("projet");
+      }, 1000);
+    }
+
+    function getCategory() {
+      const categ = window.localStorage.getItem("category");
+
+      for (let i = 0; i < categories.length; i++) {
+        const element = categories[i];
+
+        if (element.name === categ) {
+          setScrollCategories(i);
+        }
+      }
+
+      document.querySelector("html").style.overflowY = "scroll";
+      setCategoriesSelect(categ);
+      setTimeout(() => {
+        handleCateg();
+      }, 500);
+      setTimeout(() => {
+        setClose((prev) => ({ ...prev, categorieSlider: true }));
+        window.localStorage.removeItem("category");
       }, 1000);
     }
 
@@ -71,14 +93,13 @@ export default function Projets() {
     }
   }, [categorieSelect]);
 
-  useEffect(() => console.log(categories), [categories]);
-
   function leftCategorie() {
-    console.log("categorie");
     setClose((prev) => ({ ...prev, categorieSlider: false }));
+
     window.scrollTo(0, 0);
     setTimeout(() => {
       document.querySelector("html").style.overflow = "hidden";
+      setProjetSelect(null);
       setCategoriesSelect(null);
     }, 1000);
   }
@@ -98,145 +119,188 @@ export default function Projets() {
     }, 100);
   }
 
+  function handleCateg() {
+    setTimeout(() => {
+      window.scrollTo(0, projetsSliderRef.current.offsetTop);
+    }, 100);
+  }
+
   return (
     <Suspense fallback={<p>Test</p>}>
-      <nav>
-        <a
-          href="/"
-          onMouseEnter={() => hoverElement("texts")}
-          onMouseLeave={() => unHoverElement()}
-          className="close"
-        ></a>
+      <section style={{ position: "relative" }}>
+        <nav style={{ width: "100vw", height: "100vh", position: "absolute" }}>
+          <a
+            href="/"
+            onMouseEnter={() => hoverElement("texts")}
+            onMouseLeave={() => unHoverElement()}
+            className="close"
+          ></a>
 
-        <button
-          className="next"
-          onMouseEnter={() => hoverElement("texts")}
-          onMouseLeave={() => unHoverElement()}
-          onClick={() =>
-            scrollCategories === categories.length - 1
-              ? setScrollCategories(0)
-              : setScrollCategories((prev) => prev + 1)
-          }
-        ></button>
-        <button
-          className="prev"
-          onMouseEnter={() => hoverElement("texts")}
-          onMouseLeave={() => unHoverElement()}
-          onClick={() =>
-            scrollCategories <= 0
-              ? setScrollCategories(categories.length - 1)
-              : setScrollCategories((prev) => prev - 1)
-          }
-        ></button>
-      </nav>
-      <main
-        className="projects-page-section"
-        style={{ width: `${categories.length * 100}vw` }}
-      >
-        <ul
-          className="projects-page-container"
-          onMouseEnter={() => hoverElement("buttons")}
-          onMouseLeave={() => unHoverElement()}
-          style={{ transform: `translateX(-${scrollCategories * 100}vw)` }}
-        >
-          {categories.map((categorie) => (
-            <article
-              onClick={() => {
-                setCategoriesSelect(categorie.name);
-                document.querySelector("html").style.overflowY = "scroll";
-                setTimeout(() => {
-                  window.scrollTo(0, projetsSliderRef.current.offsetTop);
-                }, 100);
-                setTimeout(() => {
-                  setClose((prev) => ({ ...prev, categorieSlider: true }));
-                }, 1000);
-              }}
-              className="project-container"
-            >
-              <h2 className="categorie-name">
-                <strong>{categorie.name}</strong>
-              </h2>
+          <button
+            className="next"
+            onMouseEnter={() => hoverElement("texts")}
+            onMouseLeave={() => unHoverElement()}
+            onClick={() =>
+              scrollCategories === categories.length - 1
+                ? setScrollCategories(0)
+                : setScrollCategories((prev) => prev + 1)
+            }
+          ></button>
+          <button
+            className="prev"
+            onMouseEnter={() => hoverElement("texts")}
+            onMouseLeave={() => unHoverElement()}
+            onClick={() =>
+              scrollCategories <= 0
+                ? setScrollCategories(categories.length - 1)
+                : setScrollCategories((prev) => prev - 1)
+            }
+          ></button>
+        </nav>
+        <main className="projects-page-section">
+          <section
+            style={{
+              overflow: "hidden",
+              height: "100vh",
+              width: "100vw",
+              position: "hidden",
+            }}
+          >
+            <section style={{ width: `${categories.length * 100}vw` }}>
+              <ul
+                className="projects-page-container"
+                onMouseEnter={() => hoverElement("buttons")}
+                onMouseLeave={() => unHoverElement()}
+                style={{
+                  transform: `translateX(-${scrollCategories * 100}vw)`,
+                }}
+              >
+                {categories.map((categorie) => (
+                  <article
+                    key={Math.random() * 100}
+                    onClick={() => {
+                      setCategoriesSelect(categorie.name);
+                      document.querySelector("html").style.overflowY = "scroll";
+                      setTimeout(() => {
+                        window.scrollTo(0, projetsSliderRef.current.offsetTop);
+                      }, 100);
+                      setTimeout(() => {
+                        setClose((prev) => ({
+                          ...prev,
+                          categorieSlider: true,
+                        }));
+                      }, 1000);
+                    }}
+                    className="project-container"
+                  >
+                    <h2 className="categorie-name">
+                      <strong>{categorie.name}</strong>
+                    </h2>
 
-              <section className="projects-show-container">
-                {categorie.content.map((projet) => (
-                  <article
-                    className="projet-image-container"
-                    style={{ backgroundImage: `url(${projet.projetImage})` }}
-                  ></article>
-                ))}
-                {categorie.content.map((projet) => (
-                  <article
-                    className="projet-image-container"
-                    style={{ backgroundImage: `url(${projet.projetImage})` }}
-                  ></article>
-                ))}
-              </section>
+                    <section className="projects-show-container">
+                      {categorie.content.slice(0, 5).map((projet) => (
+                        <article
+                          key={Math.random() * 100}
+                          className="projet-image-container"
+                          style={{
+                            backgroundImage: `url(${projet.projetImage})`,
+                          }}
+                        ></article>
+                      ))}
+                      {categorie.content.slice(0, 5).map((projet) => (
+                        <article
+                          key={Math.random() * 100}
+                          className="projet-image-container"
+                          style={{
+                            backgroundImage: `url(${projet.projetImage})`,
+                          }}
+                        ></article>
+                      ))}
+                    </section>
 
-              <section className="projects-show-container">
-                {categorie.content.map((projet) => (
-                  <article
-                    className="projet-image-container"
-                    style={{ backgroundImage: `url(${projet.projetImage})` }}
-                  ></article>
-                ))}
-                {categorie.content.map((projet) => (
-                  <article
-                    className="projet-image-container"
-                    style={{ backgroundImage: `url(${projet.projetImage})` }}
-                  ></article>
-                ))}
-              </section>
+                    <section className="projects-show-container">
+                      {categorie.content.slice(0, 5).map((projet) => (
+                        <article
+                          key={Math.random() * 100}
+                          className="projet-image-container"
+                          style={{
+                            backgroundImage: `url(${projet.projetImage})`,
+                          }}
+                        ></article>
+                      ))}
+                      {categorie.content.slice(0, 5).map((projet) => (
+                        <article
+                          key={Math.random() * 100}
+                          className="projet-image-container"
+                          style={{
+                            backgroundImage: `url(${projet.projetImage})`,
+                          }}
+                        ></article>
+                      ))}
+                    </section>
 
-              <section className="projects-show-container">
-                {categorie.content.map((projet) => (
-                  <article
-                    className="projet-image-container"
-                    style={{ backgroundImage: `url(${projet.projetImage})` }}
-                  ></article>
+                    <section className="projects-show-container">
+                      {categorie.content.slice(0, 5).map((projet) => (
+                        <article
+                          key={Math.random() * 100}
+                          className="projet-image-container"
+                          style={{
+                            backgroundImage: `url(${projet.projetImage})`,
+                          }}
+                        ></article>
+                      ))}
+                      {categorie.content.slice(0, 5).map((projet) => (
+                        <article
+                          key={Math.random() * 100}
+                          className="projet-image-container"
+                          style={{
+                            backgroundImage: `url(${projet.projetImage})`,
+                          }}
+                        ></article>
+                      ))}
+                    </section>
+                  </article>
                 ))}
-                {categorie.content.map((projet) => (
-                  <article
-                    className="projet-image-container"
-                    style={{ backgroundImage: `url(${projet.projetImage})` }}
-                  ></article>
-                ))}
-              </section>
-            </article>
-          ))}
-        </ul>
-
-        {projets.length > 0 && (
-          <section className="slider-projets-section" ref={projetsSliderRef}>
-            {close.categorieSlider && (
-              <span
-                className="close-projets-slider"
-                onClick={() =>
-                  projetRef.current &&
-                  window.scrollY >= projetRef.current.offsetTop
-                    ? leftProjet()
-                    : leftCategorie()
-                }
-              ></span>
-            )}
-            <ProjetsSlider projetsArray={projets} handleProjet={handleProjet} />
-          </section>
-        )}
-
-        {projetSelect && (
-          <section ref={projetRef} className="projet-page-container">
-            <section className="projet-page-image">
-              {projetSelect.projetImage.map((image) => (
-                <img src={image} />
-              ))}
+              </ul>
             </section>
-
-            <section className="projet-page-texte">
-              <h2>{projetSelect.projetName}</h2>
-              <p>{projetSelect.projetDescription}</p>
-            </section>
           </section>
-        )}
-      </main>
+
+          {projets.length > 0 && (
+            <section className="slider-projets-section" ref={projetsSliderRef}>
+              {close.categorieSlider && (
+                <span
+                  className="close-projets-slider"
+                  onClick={() =>
+                    projetRef.current &&
+                    window.scrollY + 200 >= projetRef.current.offsetTop
+                      ? leftProjet()
+                      : leftCategorie()
+                  }
+                ></span>
+              )}
+              <ProjetsSlider
+                projetsArray={projets}
+                handleProjet={handleProjet}
+              />
+            </section>
+          )}
+
+          {projetSelect && (
+            <section ref={projetRef} className="projet-page-container">
+              <section className="projet-page-image">
+                {projetSelect.projetImage.map((image) => (
+                  <img key={Math.random() * 100} src={image} />
+                ))}
+              </section>
+
+              <section className="projet-page-texte">
+                <h2>{projetSelect.projetName}</h2>
+                <p>{projetSelect.projetDescription}</p>
+              </section>
+            </section>
+          )}
+        </main>
+      </section>
     </Suspense>
   );
 }

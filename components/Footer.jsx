@@ -2,9 +2,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { hoverElement, unHoverElement } from "./Cursor";
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import React from "react";
+import React, { useId } from "react";
 
 export default function Footer() {
+  const [category, setCategory] = React.useState([]);
+
+  React.useEffect(() => {
+    async function getAllCategories() {
+      const array = [];
+      const data = await fetch("/api/get-all-categories")
+        .then((response) => response.json())
+        .then((datas) => datas.data);
+
+      for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+
+        array.push(element);
+      }
+
+      setCategory(array);
+    }
+    getAllCategories();
+  }, []);
+
+  function goCategory(categoryName) {
+    if (typeof window === undefined) return;
+
+    window.localStorage.setItem("category", categoryName);
+  }
+
   return (
     <footer>
       <section className="links-footer">
@@ -22,77 +48,36 @@ export default function Footer() {
             onMouseEnter={() => hoverElement("links")}
             onMouseLeave={() => unHoverElement()}
           >
-            <a href="/">Projets</a>
+            <a href="/projets">Projets</a>
           </li>
           <li
             className="link-footer"
             onMouseEnter={() => hoverElement("links")}
             onMouseLeave={() => unHoverElement()}
           >
-            <a href="/">À propos</a>
+            <a href="https://www.linkedin.com/in/marine-sicaud/">À propos</a>
           </li>
           <li
             className="link-footer"
             onMouseEnter={() => hoverElement("links")}
             onMouseLeave={() => unHoverElement()}
           >
-            <a href="/">Contact</a>
+            <a href="mailto:sicaud.marine.pro@gmail.com">Contact</a>
           </li>
         </ul>
         <ul className="link-footer-container">
           <h3 className="name-link-categorie">Projets :</h3>
-          <li
-            className="link-footer"
-            onMouseEnter={() => hoverElement("links")}
-            onMouseLeave={() => unHoverElement()}
-          >
-            <a href="/">Illustrations</a>
-          </li>
-          <li
-            className="link-footer"
-            onMouseEnter={() => hoverElement("links")}
-            onMouseLeave={() => unHoverElement()}
-          >
-            <a href="/">Graphismes</a>
-          </li>
-          <li
-            className="link-footer"
-            onMouseEnter={() => hoverElement("links")}
-            onMouseLeave={() => unHoverElement()}
-          >
-            <a href="/">Photographies</a>
-          </li>
-          <li
-            className="link-footer"
-            onMouseEnter={() => hoverElement("links")}
-            onMouseLeave={() => unHoverElement()}
-          >
-            <a href="/">Autres</a>
-          </li>
-        </ul>
-        <ul className="link-footer-container">
-          <h3 className="name-link-categorie">A propos :</h3>
-          <li
-            className="link-footer"
-            onMouseEnter={() => hoverElement("links")}
-            onMouseLeave={() => unHoverElement()}
-          >
-            <a href="/">Qui je suis</a>
-          </li>
-          <li
-            className="link-footer"
-            onMouseEnter={() => hoverElement("links")}
-            onMouseLeave={() => unHoverElement()}
-          >
-            <a href="/">Ma vision</a>
-          </li>
-          <li
-            className="link-footer"
-            onMouseEnter={() => hoverElement("links")}
-            onMouseLeave={() => unHoverElement()}
-          >
-            <a href="/">Ma carrière</a>
-          </li>
+          {category.map((categ) => (
+            <li
+              key={categ._id}
+              className="link-footer"
+              onClick={() => goCategory(categ.name)}
+              onMouseEnter={() => hoverElement("links")}
+              onMouseLeave={() => unHoverElement()}
+            >
+              <a href="/projets">{categ.name}</a>
+            </li>
+          ))}
         </ul>
       </section>
 

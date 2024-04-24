@@ -43,7 +43,7 @@ export default function Nav() {
       <div></div>
       <section
         className={
-          isDynamique && windowWidth >= 1024 ? "dynamique-island" : "normal-nav"
+          isDynamique && windowWidth >= 768 ? "dynamique-island" : "normal-nav"
         }
       >
         <a
@@ -86,7 +86,7 @@ export default function Nav() {
             onMouseLeave={() => unHoverElement()}
             className="nav-classic-onglet"
           >
-            <a href="#">A propos</a>
+            <a href="https://www.linkedin.com/in/marine-sicaud/">A propos</a>
           </li>
         </ul>
       </section>
@@ -99,7 +99,7 @@ export default function Nav() {
         ></span>
       ) : (
         <a
-          href="#"
+          href="mailto:sicaud.marine.pro@gmail.com"
           className="nav-classic-button"
           onMouseEnter={() => hoverElement("buttons")}
           onMouseLeave={() => unHoverElement()}

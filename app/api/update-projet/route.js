@@ -8,12 +8,46 @@ export async function PUT(req, res) {
   await connectToDB();
 
   const data = await req.formData();
-  const file = data.get("file");
-  const arrayBuffer =
-    typeof file === "object" ? await file.arrayBuffer() : null;
-  let buffer = new Uint8Array(arrayBuffer);
-
   const body = await JSON.parse(data.get("body"));
+  const length = data.get("length");
+  let pass = false;
+  let getPrev = false;
+
+  let images = [];
+  let imagesPath = [];
+
+  for (let index = 0; index < length; index++) {
+    const file = data.get(`${index}`);
+    if (file.type === undefined) {
+      pass = true;
+      getPrev = true;
+    } else if (
+      file.type === "image/png" ||
+      file.type === "image/jpeg" ||
+      file.type === "image/gif" ||
+      file.type === "image/webp" ||
+      file.type === "image/svg+xml"
+    ) {
+      pass = true;
+    }
+
+    if (!pass) {
+      return NextResponse.json({
+        message: "veuillez ajouter une image et pas un autre type de fichier",
+        status: false,
+      });
+    }
+
+    if (!getPrev) {
+      console.log(file, getPrev);
+      imagesPath.push(`/assets/${body.categoryName}/${file.name}`);
+
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = new Uint8Array(arrayBuffer);
+
+      images.push(buffer);
+    }
+  }
 
   const categorie = await Categories.findOne({ name: body.prevCategoryName });
 
@@ -34,32 +68,42 @@ export async function PUT(req, res) {
       const newProjet = await new Projects({
         categoryName: body.categoryName,
         projetName: body.projetName,
-        projetImage:
-          typeof file === "object"
-            ? `/assets/${body.categoryName}/${file.name}`
-            : body.prevProjetImage,
-        projetDescription: body.categoprojetDescriptionryName,
+        projetImage: !getPrev ? imagesPath : body.prevProjetImage,
+        projetDescription: body.projetDescription,
         projetDate: body.projetDate,
         isLarge: body.isLarge,
         isTall: body.isTall,
       });
 
-      const {
-        updated,
-        data: { commit },
-      } = await octokit.createOrUpdateTextFile({
-        owner: "TheoDerive",
-        repo: "portfolioMarinev2",
-        path: `public/assets/${body.categoryName}/${file.name}`,
-        content: buffer,
-        message: `Ajout de ${file.name}`,
-      });
+      let finish = true;
+
+      if (!getPrev) {
+        for (let index = 0; index < length; index++) {
+          const image = images[index];
+          const imagePath = imagesPath[index];
+
+          const {
+            updated,
+            data: { commit },
+          } = await octokit.createOrUpdateTextFile({
+            owner: "TheoDerive",
+            repo: "portfolioMarinev2",
+            path: `public${imagePath}`,
+            content: image,
+            message: `Ajout d'image pour un projet`,
+          });
+
+          if (!updated) {
+            finish = false;
+          }
+        }
+      }
 
       const projetExist = newCategorie.content.find(
         (projet) => projet.projetName === newProjet.projetName,
       );
 
-      if (!projetExist) {
+      if (!projetExist && finish) {
         newCategorie.content.push(newProjet);
         try {
           await Categories.findOneAndUpdate(
@@ -96,4 +140,3 @@ export async function PUT(req, res) {
     });
   }
 }
-

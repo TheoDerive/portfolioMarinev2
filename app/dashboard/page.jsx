@@ -76,26 +76,13 @@ export default function Dashboard() {
       return;
 
     document.querySelector(".popup-container").style.opacity = 1;
-    if (data.ok === false) {
-      setTimeout(() => {
-        document.querySelector(".popup-container").style.opacity = 0;
-      }, 5000);
-    } else {
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    }
+    getAllCategories();
+    setTimeout(() => {
+      document.querySelector(".popup-container").style.opacity = 0;
+    }, 5000);
   }, [data]);
 
   React.useEffect(() => {
-    async function getAllCategories() {
-      const data = await fetch("/api/get-all-categories")
-        .then((response) => response.json())
-        .then((datas) => datas.data);
-
-      setCategories(data);
-    }
-
     function isPasswordValid() {
       const session = window.sessionStorage.getItem("password");
 
@@ -107,6 +94,14 @@ export default function Dashboard() {
     getAllCategories();
     isPasswordValid();
   }, []);
+
+  async function getAllCategories() {
+    const data = await fetch("/api/get-all-categories")
+      .then((response) => response.json())
+      .then((datas) => datas.data);
+
+    setCategories(data);
+  }
 
   return (
     <>
@@ -124,7 +119,10 @@ export default function Dashboard() {
 
           <section className="all-content-container">
             {categories.map((categorie) => (
-              <article className="categorie-container">
+              <article
+                className="categorie-container"
+                key={Math.random() * 100}
+              >
                 <section className="categorie-information">
                   <h2>{categorie.name}</h2>
                   <button
@@ -171,10 +169,13 @@ export default function Dashboard() {
                     className="categorie-content-container"
                   >
                     {categorie.content.map((projetCategorie) => (
-                      <article className="projet-container">
+                      <article
+                        className="projet-container"
+                        key={Math.random() * 100}
+                      >
                         <img
                           className="projet-image"
-                          src={projetCategorie.projetImage}
+                          src={projetCategorie.projetImage[0]}
                         />
                         <div className="projet-information">
                           <h3>{projetCategorie.projetName}</h3>
@@ -255,7 +256,11 @@ export default function Dashboard() {
           <Popup data={data} />
         </main>
       ) : (
-        <Password setData={setData} data={data} />
+        <Password
+          setPasswordValid={setPasswordValid}
+          setData={setData}
+          data={data}
+        />
       )}
     </>
   );

@@ -9,19 +9,20 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
   // Get scroll position
   React.useEffect(() => {
     function transform(section) {
-      setScrollY(window.scrollY);
-      const offsetTop = section.parentElement.offsetTop;
-      const scrollSection = section.querySelector(".scroll-projets");
-      let pourcentage =
-        ((window.scrollY - offsetTop) / window.innerHeight) * 100;
+      if (section) {
+        setScrollY(window.scrollY);
+        const offsetTop = section.parentElement.offsetTop;
+        const scrollSection = section.querySelector(".scroll-projets");
+        let pourcentage =
+          ((window.scrollY - offsetTop) / window.innerHeight) * 100;
 
-      console.log(pourcentage);
-      pourcentage < 0
-        ? 0
-        : pourcentage > (projetsArray.length - 1) * 100 + 20
-          ? (projetsArray.length - 1) * 100 + 20
-          : pourcentage;
-      scrollSection.style.transform = `translate3d(${-pourcentage}vw, 0, 0)`;
+        pourcentage < 0
+          ? 0
+          : pourcentage > (projetsArray.length - 1) * 100 + 20
+            ? (projetsArray.length - 1) * 100 + 20
+            : pourcentage;
+        scrollSection.style.transform = `translate3d(${-pourcentage}vw, 0, 0)`;
+      }
     }
 
     function handleScroll() {
@@ -43,7 +44,9 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
     <section
       id="projets"
       className="projets-container"
-      style={{ height: `${projetsArray.length * 100 + 50}vh` }}
+      style={{
+        height: `${projetsArray.length * 100 + 50}vh`,
+      }}
     >
       <div className="projets">
         <div
@@ -52,6 +55,7 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
         >
           {projetsArray.map((projet) => (
             <article
+              key={projet._id}
               className="projet"
               onMouseEnter={() => hoverElement("links")}
               onMouseLeave={() => unHoverElement()}

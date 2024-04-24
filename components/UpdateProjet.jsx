@@ -6,12 +6,20 @@ export default function UpdateProjet({
   categories,
   setData,
 }) {
+  console.log(updatedProjet);
   const UpdateProjet = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.set("file", updatedProjet.projetImage);
+
+    for (let index = 0; index < updatedProjet.projetImage.length; index++) {
+      const element = updatedProjet.projetImage[index];
+
+      formData.append(index, element);
+    }
+
     formData.set("body", JSON.stringify(updatedProjet));
+    formData.set("length", updatedProjet.projetImage.length);
 
     const fetching = await fetch("/api/update-projet", {
       method: "PUT",
@@ -86,7 +94,7 @@ export default function UpdateProjet({
               onChange={(e) =>
                 setUpdatedProjet((prev) => ({
                   ...prev,
-                  projetImage: e.target.files[0],
+                  projetImage: e.target.files,
                 }))
               }
             />

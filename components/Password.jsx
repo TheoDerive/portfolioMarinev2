@@ -1,10 +1,11 @@
 import React from "react";
 import Popup from "./Popup";
 
-export default function Password({ data, setData }) {
+export default function Password({ data, setData, setPasswordValid }) {
   const [password, setPassword] = React.useState("");
 
   function checkPassword() {
+    setPasswordValid(true);
     if (password === process.env.NEXT_PUBLIC_MOT_DE_PASSE) {
       window.sessionStorage.setItem("password", true);
       setData({
