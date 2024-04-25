@@ -30,11 +30,11 @@ export default async function Home() {
       return dateB - dateA;
     });
 
-    return array.slice(0, 4);
+    setProjet(array.slice(0, 4));
   }
 
   React.useEffect(() => {
-    setProjet(() => getAllProjet());
+    getAllProjet();
   }, []);
 
   function clickHomeProjet(projet) {
