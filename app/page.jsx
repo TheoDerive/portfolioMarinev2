@@ -8,7 +8,7 @@ import ProjetsSlider from "@/components/Projets";
 import Footer from "@/components/Footer";
 import React from "react";
 
-export default async function Home() {
+export default function Home() {
   const [projet, setProjet] = React.useState([]);
 
   async function getAllProjet() {
