@@ -4,8 +4,11 @@ import React, { Suspense, useEffect, useState } from "react";
 
 import "../../style/style.scss";
 import { hoverElement, unHoverElement } from "@/components/Cursor";
+import ProjetsSlider from "@/components/Projets";
+import Loading from "../loading";
 
 export default function Projets() {
+  const [loading, setLoading] = React.useState(false);
   const [categorieSelect, setCategoriesSelect] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
   const [projets, setProjets] = React.useState([]);
@@ -24,6 +27,7 @@ export default function Projets() {
     document.querySelector("html").style.overflow = "hidden";
 
     async function getAllCategories() {
+      setLoading(true);
       const data = await fetch("/api/get-all-categories")
         .then((response) => response.json())
         .then((datas) => datas.data);
@@ -79,6 +83,7 @@ export default function Projets() {
     }
 
     getAllCategories();
+    setLoading(false);
   }, []);
 
   React.useEffect(() => {
@@ -126,6 +131,7 @@ export default function Projets() {
 
   return (
     <>
+      {loading ? <Loading /> : null}
       <section style={{ position: "relative" }}>
         <nav style={{ width: "100vw", height: "100vh", position: "absolute" }}>
           <a
