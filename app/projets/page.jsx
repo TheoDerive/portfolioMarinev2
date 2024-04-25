@@ -4,7 +4,6 @@ import React, { Suspense, useEffect, useState } from "react";
 
 import "../../style/style.scss";
 import { hoverElement, unHoverElement } from "@/components/Cursor";
-import { ProjetsSlider } from "@/components/Projets";
 
 export default function Projets() {
   const [categorieSelect, setCategoriesSelect] = React.useState(null);
@@ -126,7 +125,7 @@ export default function Projets() {
   }
 
   return (
-    <Suspense fallback={<p>Test</p>}>
+    <>
       <section style={{ position: "relative" }}>
         <nav style={{ width: "100vw", height: "100vh", position: "absolute" }}>
           <a
@@ -301,6 +300,6 @@ export default function Projets() {
           )}
         </main>
       </section>
-    </Suspense>
+    </>
   );
 }

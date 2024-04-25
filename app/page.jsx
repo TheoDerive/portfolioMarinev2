@@ -3,10 +3,20 @@
 import Nav from "@/components/Nav";
 import "../style/style.scss";
 import Header from "@/components/Header";
-import Competences from "@/components/Competences";
-import { ProjetsSlider } from "@/components/Projets";
 import Footer from "@/components/Footer";
-import React from "react";
+import React, { Suspense } from "react";
+import Loading from "./loading";
+import dynamic from "next/dynamic";
+
+const Competences = dynamic(() => import("@/components/Competences"), {
+  loading: () => <Loading />, // Composant de chargement à afficher pendant le chargement
+  ssr: false, // Désactiver le rendu côté serveur pour ce composant
+});
+
+const ProjetsSlider = dynamic(() => import("@/components/Projets"), {
+  loading: () => <Loading />, // Composant de chargement à afficher pendant le chargement
+  ssr: false, // Désactiver le rendu côté serveur pour ce composant
+});
 
 export default function Home() {
   const [projets, setProjets] = React.useState([]);
@@ -42,12 +52,12 @@ export default function Home() {
   }
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <Nav />
       <Header />
       <Competences />
       <ProjetsSlider projetsArray={projets} handleProjet={clickHomeProjet} />
       <Footer />
-    </>
+    </Suspense>
   );
 }

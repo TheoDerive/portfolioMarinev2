@@ -27,6 +27,29 @@ body {
   overflow: hidden !important;
 }
 
+// Loading
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 999;
+
+  img {
+    width: 50%;
+    max-width: 300px;
+    animation: loaderAnimation infinite 3s ease-in-out;
+  }
+}
+
 // Curseur
 
 .cursor {
@@ -539,9 +562,14 @@ header {
       flex-direction: column;
     }
 
-    img {
-      width: 23vw;
-      height: 80%;
+    div {
+      max-width: 600px;
+      min-width: 400px;
+      max-height: 900px;
+      height: 75vh;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
 
       @media only screen and (max-width: 768px) {
         width: 300px;
@@ -776,6 +804,7 @@ footer {
   pointer-events: none;
   padding: 10px;
   width: 100vw;
+  min-height: 100vh;
   display: grid;
   grid: auto / 1fr 1fr;
   align-items: flex-start;
@@ -791,6 +820,7 @@ footer {
   .projet-page-image {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     width: 100%;
 

@@ -3,7 +3,7 @@
 import React from "react";
 import { hoverElement, unHoverElement } from "./Cursor";
 
-export function ProjetsSlider({ projetsArray, handleProjet = null }) {
+export default function ProjetsSlider({ projetsArray, handleProjet = null }) {
   const [scrollY, setScrollY] = React.useState(0);
 
   // Get scroll position
@@ -63,7 +63,9 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
                 handleProjet ? handleProjet(projet, scrollY) : null
               }
             >
-              <img src={projet.projetImage[0]} alt="image" />
+              <div
+                style={{ backgroundImage: `url(${projet.projetImage[0]})` }}
+              ></div>
               <span>
                 {" "}
                 <span className="barre"></span>

@@ -36,7 +36,7 @@ export default function Nav() {
     return () => {
       window.removeEventListener("scroll", scrollNav);
     };
-  });
+  }, []);
 
   return (
     <nav className="nav-classic">

@@ -16,10 +16,8 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Suspense fallback={<Loading />}>
-          <Cursor />
-          {children}
-        </Suspense>
+        <Cursor />
+        {children}
       </body>
     </html>
   );
