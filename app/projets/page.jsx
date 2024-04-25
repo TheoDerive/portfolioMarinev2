@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 
 import "../../style/style.scss";
 import { hoverElement, unHoverElement } from "@/components/Cursor";
-import { ProjetsSlider } from "@/components/Projets";
+import ProjetsSlider from "@/components/Projets";
 
 export default function Projets() {
   const [categorieSelect, setCategoriesSelect] = React.useState(null);

@@ -12,7 +12,6 @@ export default function NewProjet({
     e.preventDefault();
 
     const formData = new FormData();
-    console.log(projetData);
 
     for (let index = 0; index < projetData.projetImage.length; index++) {
       const element = projetData.projetImage[index];

@@ -3,7 +3,7 @@
 import React from "react";
 import { hoverElement, unHoverElement } from "./Cursor";
 
-export function ProjetsSlider({ projetsArray, handleProjet = null }) {
+export default function ProjetsSlider({ projetsArray, handleProjet = null }) {
   const [scrollY, setScrollY] = React.useState(0);
 
   // Get scroll position
@@ -48,7 +48,7 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
         height: `${projetsArray.length * 100 + 50}vh`,
       }}
     >
-      <div className="projets">
+      <section className="projets">
         <div
           className="scroll-projets"
           style={{ width: `${projetsArray.length * 100}vw` }}
@@ -72,7 +72,7 @@ export function ProjetsSlider({ projetsArray, handleProjet = null }) {
             </article>
           ))}
         </div>
-      </div>
+      </section>
     </section>
   );
 }

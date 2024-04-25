@@ -1,4 +1,6 @@
 import Cursor from "@/components/Cursor";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const metadata = {
   title: "Marine test Sicaud",
@@ -14,8 +16,10 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Cursor />
-        {children}
+        <Suspense fallback={<Loading />}>
+          <Cursor />
+          {children}
+        </Suspense>
       </body>
     </html>
   );

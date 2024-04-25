@@ -72,7 +72,7 @@ export default function Nav() {
             onMouseLeave={() => unHoverElement()}
             className="nav-classic-onglet"
           >
-            <a href="/">Acceuil</a>
+            <a href="/">Accueil</a>
           </li>
           <li
             onMouseEnter={() => hoverElement("links")}

@@ -1,21 +1,19 @@
 import React from "react";
 import { hoverElement, unHoverElement } from "./Cursor";
 
-export default function Competences() {
-  const [competences, setCompetences] = React.useState([]);
+export default async function Competences() {
+  const getCompetences = async () => {
+    // Récuration des compétances
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}api/get-competences`,
+    )
+      .then((res) => res.json())
+      .then((data) => data);
 
-  React.useEffect(() => {
-    const getCompetences = async () => {
-      // Récuration des compétances
-      const response = await fetch("/api/get-competences")
-        .then((res) => res.json())
-        .then((data) => data);
+    return response;
+  };
 
-      setCompetences(response);
-    };
-
-    getCompetences();
-  }, []);
+  const competences = await getCompetences();
 
   return (
     <section id="competences">
@@ -40,4 +38,3 @@ export default function Competences() {
     </section>
   );
 }
-
