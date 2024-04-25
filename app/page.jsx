@@ -9,6 +9,8 @@ import Footer from "@/components/Footer";
 import React from "react";
 
 export default async function Home() {
+  const [projet, setProjet] = React.useState([]);
+
   async function getAllProjet() {
     const array = [];
     const data = await fetch(
@@ -31,7 +33,9 @@ export default async function Home() {
     return array.slice(0, 4);
   }
 
-  const projet = await getAllProjet();
+  React.useEffect(() => {
+    setProjet(() => getAllProjet());
+  }, []);
 
   function clickHomeProjet(projet) {
     if (typeof window === undefined) return;
