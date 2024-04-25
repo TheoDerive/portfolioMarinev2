@@ -3,7 +3,7 @@
 import React from "react";
 import { hoverElement, unHoverElement } from "./Cursor";
 
-export default function ProjetsSlider({ projetsArray, handleProjet = null }) {
+export function ProjetsSlider({ projetsArray, handleProjet = null }) {
   const [scrollY, setScrollY] = React.useState(0);
 
   // Get scroll position
