@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import Loading from "./loading";
 
 export const metadata = {
-  title: "Marine test Sicaud",
+  title: "Marine Sicaud",
 };
 
 export default function RootLayout({ children }) {

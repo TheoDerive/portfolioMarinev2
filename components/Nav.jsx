@@ -16,7 +16,7 @@ export default function Nav() {
     let checkout = false;
 
     function scrollNav() {
-      const offsetTop = competencesContainer.offsetTop;
+      const offsetTop = competencesContainer?.offsetTop;
       let pourcentage =
         ((window.scrollY - offsetTop) / window.innerHeight) * 100;
 
