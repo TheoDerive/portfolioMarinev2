@@ -12,17 +12,15 @@ export default function Nav() {
     setWindowWidth(window.innerWidth);
 
     const navElement = document.querySelector(".nav-classic");
-    const competencesContainer = document.querySelector("#competences");
-    let checkout = false;
+    const page = document.querySelector("html");
 
     function scrollNav() {
-      const offsetTop = competencesContainer?.offsetTop;
+      const offsetTop = page?.offsetTop;
       let pourcentage =
         ((window.scrollY - offsetTop) / window.innerHeight) * 100;
+      console.log(pourcentage);
 
-      if (pourcentage > -10) {
-        checkout = true;
-
+      if (pourcentage > 100) {
         navElement.classList.add("nav-classic-scroll");
         setIsDynamique(false);
       } else {
