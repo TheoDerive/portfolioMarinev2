@@ -38,6 +38,22 @@ export default function Competences() {
             <span>{competence.name}</span>
           </li>
         ))}
+        {competences.map((competence) => (
+          <li
+            className="competences-homepage"
+            onMouseEnter={() => hoverElement("texts")}
+            onMouseLeave={() => unHoverElement()}
+            key={competence._id}
+          >
+            <img
+              src={competence.image}
+              alt={`${competence.name} image`}
+              className="competence-homepage-image"
+            />
+
+            <span>{competence.name}</span>
+          </li>
+        ))}
       </ul>
     </section>
   );

@@ -5,9 +5,12 @@ import { hoverElement, unHoverElement } from "./Cursor";
 
 export default function ProjetsSlider({ projetsArray, handleProjet = null }) {
   const [scrollY, setScrollY] = React.useState(0);
+  const [windowWidth, setWindow] = React.useState();
 
   // Get scroll position
   React.useEffect(() => {
+    setWindow(window.innerWidth);
+
     function transform(section) {
       if (section) {
         setScrollY(window.scrollY);
@@ -45,13 +48,23 @@ export default function ProjetsSlider({ projetsArray, handleProjet = null }) {
       id="projets"
       className="projets-container"
       style={{
-        height: `${projetsArray.length * 100 + 50}vh`,
+        height: `${
+          windowWidth && windowWidth > 1000
+            ? projetsArray.length * 70 + 20
+            : projetsArray.length * 100 + 50
+        }vh`,
       }}
     >
       <section className="projets">
         <div
           className="scroll-projets"
-          style={{ width: `${projetsArray.length * 100}vw` }}
+          style={{
+            width: `${
+              windowWidth && windowWidth > 1000
+                ? projetsArray.length * 70
+                : projetsArray.length * 100
+            }vw`,
+          }}
         >
           {projetsArray.map((projet) => (
             <article

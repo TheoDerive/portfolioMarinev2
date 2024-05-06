@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import React, { Suspense } from "react";
 import Loading from "./loading";
 import dynamic from "next/dynamic";
+import Cinematic from "@/components/Cinematic";
+import { useStore } from "@/hooks/useStore";
 
 const Competences = dynamic(() => import("@/components/Competences"), {
   loading: () => <Loading />, // Composant de chargement à afficher pendant le chargement
@@ -20,6 +22,8 @@ const ProjetsSlider = dynamic(() => import("@/components/Projets"), {
 
 export default function Home() {
   const [projets, setProjets] = React.useState([]);
+
+  const { isCinematic, setIsCinematic } = useStore();
 
   React.useEffect(() => {
     async function getAllCategories() {
@@ -42,7 +46,39 @@ export default function Home() {
       setProjets(array.slice(0, 4));
     }
     getAllCategories();
+    isAfterSevenPM();
   }, []);
+
+  React.useEffect(() => {
+    const intervalId = setInterval(isAfterSevenPM, 300000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  React.useEffect(() => {
+    const local = window.sessionStorage.getItem("cinematicPass");
+
+    if (local) {
+      setIsCinematic(false);
+    }
+  }, []);
+
+  function isAfterSevenPM() {
+    const now = new Date();
+
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    const currentHour = hours * 60 + minutes;
+
+    const sevenPM = 19 * 60;
+
+    if (currentHour >= sevenPM) {
+      document.querySelector(".eyes-confort").style.display = "flex";
+    } else {
+      document.querySelector(".eyes-confort").style.display = "none";
+    }
+  }
 
   function clickHomeProjet(projet) {
     if (typeof window === undefined) return;
@@ -53,11 +89,20 @@ export default function Home() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Nav />
-      <Header />
-      <Competences />
-      <ProjetsSlider projetsArray={projets} handleProjet={clickHomeProjet} />
-      <Footer />
+      {isCinematic ? (
+        <Cinematic />
+      ) : (
+        <>
+          <Nav />
+          <Header />
+          <Competences />
+          <ProjetsSlider
+            projetsArray={projets}
+            handleProjet={clickHomeProjet}
+          />
+          <Footer />
+        </>
+      )}
     </Suspense>
   );
 }

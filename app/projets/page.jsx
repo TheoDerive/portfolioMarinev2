@@ -3,7 +3,12 @@
 import React, { Suspense, useEffect, useState } from "react";
 
 import "../../style/style.scss";
-import { hoverElement, unHoverElement } from "@/components/Cursor";
+import {
+  hoverElement,
+  hoverImage,
+  unHoverElement,
+  unHoverImage,
+} from "@/components/Cursor";
 import ProjetsSlider from "@/components/Projets";
 import Loading from "../loading";
 
@@ -22,6 +27,7 @@ export default function Projets() {
 
   const projetsSliderRef = React.useRef();
   const projetRef = React.useRef();
+  const projetImageRef = React.useRef();
 
   React.useEffect(() => {
     document.querySelector("html").style.overflow = "hidden";
@@ -32,7 +38,15 @@ export default function Projets() {
         .then((response) => response.json())
         .then((datas) => datas.data);
 
-      setCategories(data);
+      let realData = [];
+
+      data.forEach((element) => {
+        if (element.content.length >= 4) {
+          realData.push(element);
+        }
+      });
+
+      setCategories(realData);
 
       if (window.localStorage.getItem("projet")) getProjet();
       if (window.localStorage.getItem("category")) getCategory();
@@ -294,7 +308,15 @@ export default function Projets() {
             <section ref={projetRef} className="projet-page-container">
               <section className="projet-page-image">
                 {projetSelect.projetImage.map((image) => (
-                  <img key={Math.random() * 100} src={image} />
+                  <img
+                    ref={projetImageRef}
+                    onMouseMove={(e) =>
+                      hoverImage(image, projetImageRef.current, e)
+                    }
+                    onMouseLeave={() => unHoverImage()}
+                    key={Math.random() * 100}
+                    src={image}
+                  />
                 ))}
               </section>
 

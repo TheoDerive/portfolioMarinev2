@@ -23,8 +23,31 @@ body {
   position: relative;
 }
 
+canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+iframe {
+  border: 0;
+  border-radius: 50px;
+}
+
 .remove-scroll {
   overflow: hidden !important;
+}
+
+.eyes-confort {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  background: #dbc09e;
+  opacity: 0.1;
+  z-index: 999;
+  display: none;
 }
 
 // Loading
@@ -479,17 +502,21 @@ header {
 // // Competances
 
 #competences {
-  width: 100%;
-  padding: 50px 0;
+  width: 105%;
+  padding: 30px 0;
   position: relative;
+  background: black;
+  margin-bottom: 50px;
+  transform: rotate(-2deg) translateX(-10px);
 
   .competences-homepage-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 50px;
-    width: 100%;
-    padding: 20px 100px;
+    justify-content: flex-start;
+    gap: 150px;
+    padding-left: 150px;
+    width: max-content;
+    animation: autoSlideAnimation infinite 20s linear;
 
     @media only screen and (max-width: 768px) {
       padding: 0 10px 0 35px;
@@ -504,10 +531,7 @@ header {
     flex-direction: column;
     align-items: center;
     width: 70px;
-    background: #1e1e1e;
     height: 70px;
-    border-radius: 20px;
-    padding: 10px;
 
     img {
       border-radius: 20px;
@@ -515,9 +539,9 @@ header {
     }
 
     span {
-      margin-top: 10px;
       font-size: 0.9rem;
       opacity: 0;
+      color: white;
       transition: opacity 0.2s ease-in-out;
     }
 
@@ -550,29 +574,34 @@ header {
   padding: 0 5vw;
 
   @media only screen and (max-width: 768px) {
-    gap: 50px;
+    gap: 200px;
   }
 
   .projet {
     display: flex;
     align-items: flex-start;
-    gap: 30px;
-
-    @media only screen and (max-width: 768px) {
-      flex-direction: column;
-    }
+    flex-direction: column;
 
     div {
-      max-width: 600px;
-      min-width: 400px;
-      max-height: 900px;
-      height: 75vh;
-      background-size: contain;
+      width: 350px;
+      height: 500px;
+      background-size: cover;
       background-repeat: no-repeat;
-      background-position: center;
+      background-position: top;
+      position: relative;
 
       @media only screen and (max-width: 768px) {
         width: 300px;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 90%;
+        background: black;
+        top: 0;
+        right: -5px;
       }
     }
 
@@ -711,7 +740,7 @@ footer {
 
     .project-container {
       width: 100vw;
-      height: 100%;
+      height: 100vh;
       position: relative;
       overflow: hidden;
 
@@ -825,7 +854,8 @@ footer {
     width: 100%;
 
     img {
-      width: 95%;
+      width: 65%;
+      pointer-events: all;
     }
   }
 
@@ -1064,6 +1094,62 @@ footer {
     &:hover {
       background: black;
       color: white;
+    }
+  }
+}
+
+// // About
+
+.about-header {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+
+  .about-header-information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      width: 500px;
+      font-size: 0.85rem;
+    }
+  }
+
+  img {
+    width: 300px;
+    border-radius: 50%;
+  }
+}
+
+.about-job-container {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  background: black;
+  color: white;
+  width: 105%;
+  overflow: hidden;
+  transform: rotate(-2deg) translateX(-10px);
+
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: max-content;
+    animation: autoSlideAnimation infinite 20s linear;
+    gap: 100px;
+    padding-left: 100px;
+
+    p {
+      font-size: 3rem;
     }
   }
 }

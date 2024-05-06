@@ -70,3 +70,9 @@
     opacity: 1;
   }
 }
+
+@keyframes autoSlideAnimation {
+  100% {
+    transform: translateX(-50%);
+  }
+}

@@ -84,7 +84,7 @@ export default function Nav() {
             onMouseLeave={() => unHoverElement()}
             className="nav-classic-onglet"
           >
-            <a href="https://www.linkedin.com/in/marine-sicaud/">A propos</a>
+            <a href="/about">A propos</a>
           </li>
         </ul>
       </section>

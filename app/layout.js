@@ -1,6 +1,4 @@
 import Cursor from "@/components/Cursor";
-import { Suspense } from "react";
-import Loading from "./loading";
 
 export const metadata = {
   title: "Marine Sicaud",
@@ -17,6 +15,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Cursor />
+        <div className="eyes-confort"></div>
         {children}
       </body>
     </html>

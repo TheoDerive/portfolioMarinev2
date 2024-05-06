@@ -69,3 +69,30 @@ export function unHoverElement() {
   curseur.style.width = "20px";
   curseur.style.height = "20px";
 }
+
+export function hoverImage(image, ref, e) {
+  const curseur = document.querySelector(".cursor");
+  const zoom = ref.getBoundingClientRect();
+
+  let positionPx = e.clientX - zoom.left - 50;
+  let positionPy = e.clientY - zoom.top - 50;
+
+  let positionX = 100 * (positionPx / ref.offsetWidth);
+  let positionY = 100 * (positionPy / ref.offsetHeight);
+
+  curseur.style.backgroundImage = `url(${image})`;
+  curseur.style.backgroundColor = "transparent";
+  curseur.style.width = "200px";
+  curseur.style.height = "200px";
+  curseur.style.borderWidth = "1px";
+  curseur.style.backgroundSize = `${zoom.width * 1.2}px ${zoom.height * 1.2}px`;
+  curseur.style.backgroundRepeat = "no-repeat";
+  curseur.style.backgroundPosition = `${positionX * 1.2}% ${positionY * 1.2}%`;
+}
+
+export function unHoverImage() {
+  const curseur = document.querySelector(".cursor");
+
+  curseur.style.backgroundImage = "none";
+  unHoverElement();
+}
