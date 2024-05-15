@@ -1,58 +1,59 @@
-import { Macbook } from "./Macbook";
-import * as THREE from "three";
-import React from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { Html, useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
+import { useEffect } from "react";
+import * as THREE from "three";
 import { useStore } from "@/hooks/useStore";
-import { Iphone } from "./IPhone";
 
-export const Experience = ({ rotate = false, position }) => {
-  const group = React.useRef();
-  const [device, setDevice] = React.useState();
+export default function Experience({ setLoading, loading }) {
+  const laptop = useGLTF(
+    "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf",
+  );
+
+  const { camera } = useThree();
 
   const { setIsCinematic } = useStore();
-  const speedFactor = 0.02;
 
-  React.useEffect(() => {
-    if (window.innerWidth <= 720) {
-      setDevice("mobile");
-    } else {
-      setDevice("laptop");
-    }
-  });
+  useEffect(() => {
+    camera.position.x = -3;
+    document.querySelector(".cursor").style.display = "none";
 
-  useFrame(({ camera }) => {
-    if (group.current && rotate) {
-      camera.position.y = 0.5;
-
-      group.current.rotation.y = THREE.MathUtils.lerp(
-        group.current.rotation.y,
-        307.9,
-        speedFactor,
-      );
-
-      if (group.current.rotation.y >= 100 && camera.position.z >= 0.2) {
-        camera.position.z -= 0.025;
-      }
-
-      if (camera.position.z < 0.2) {
-        window.sessionStorage.setItem("cinematicPass", true);
+    if (!loading) {
+      setTimeout(() => {
         setIsCinematic(false);
-      }
+        window.sessionStorage.setItem("cinematicPass", true);
+      }, 6500);
     }
-    camera.lookAt(new THREE.Vector3(-0.0, 0.45, -0.6));
-  });
+  }, [loading]);
+
+  useGSAP(() => {
+    if (!loading) {
+      gsap.to(camera.position, {
+        x: 0,
+        y: 1.5,
+        z: 4,
+        duration: 2,
+      });
+    }
+  }, [loading]);
 
   return (
-    <group ref={group}>
-      {device === "mobile" ? (
-        <Iphone scale={0.01} show={rotate} position={position} />
-      ) : (
-        <Macbook scale={4} position={position} show={rotate} />
-      )}
-      <mesh position={[position[0], -10, position[2]]}>
-        <boxGeometry args={[2, 20, 2]} />
-        <meshToonMaterial />
-      </mesh>
-    </group>
+    <>
+      <primitive object={laptop.scene} position-y={-1.5} />
+
+      <Html
+        transform
+        position={[0.01, 0.02, -1.5]}
+        rotation-x={-0.25}
+        distanceFactor={1.16}
+      >
+        <iframe
+          src="/login"
+          loading="lazy"
+          onLoad={() => setLoading(false)}
+        ></iframe>
+      </Html>
+    </>
   );
-};
+}

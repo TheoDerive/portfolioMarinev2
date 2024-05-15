@@ -1,27 +1,22 @@
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, OrbitControls } from "@react-three/drei";
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { PostProcessing } from "./PostProcessing";
-import { Experience } from "./Experience";
-import { Light } from "./Light";
+"use client";
+
+import Loading from "@/app/loading";
+import { Environment } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import React from "react";
+import Experience from "./Experience";
 
 export default function Cinematic() {
+  const [loading, setLoading] = React.useState(true);
+
   return (
-    <Canvas camera={{ position: [0, 0, 10] }}>
-      <color attach="background" args={["#000"]} />
-      <Light />
-      <ambientLight intensity={0.05} color={"hsl(25, 100%, 64%)"} />
-      <Environment preset="night" />
-      <Experience rotate={true} position={[0, 0.05, 0]} />
-      {Array.from({ length: 10 }).map((_, i) => (
-        <>
-          <Experience key={i} position={[i * 5 + -20, 0, -2]} />
-          <Experience key={i + 10} position={[i * 5 + -20, 0, -7]} />
-          <Experience key={i + 20} position={[i * 5 + -20, 0, -12]} />
-        </>
-      ))}
-      <OrbitControls />
-      <PostProcessing />
-    </Canvas>
+    <>
+      {loading ? <Loading /> : null}
+      <Canvas camera={{ position: [0, 1.5, 4], fov: 45, near: 0.1, far: 2000 }}>
+        <Environment preset="warehouse" />
+        <ambientLight intensity={1.5} />
+        <Experience setLoading={setLoading} loading={loading} />
+      </Canvas>
+    </>
   );
 }

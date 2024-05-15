@@ -7,8 +7,12 @@ import Footer from "@/components/Footer";
 import React, { Suspense } from "react";
 import Loading from "./loading";
 import dynamic from "next/dynamic";
-import Cinematic from "@/components/Cinematic";
 import { useStore } from "@/hooks/useStore";
+
+const Cinematic = dynamic(() => import("@/components/Cinematic"), {
+  loading: () => <Loading />, // Composant de chargement à afficher pendant le chargement
+  ssr: true, // Désactiver le rendu côté serveur pour ce composant
+});
 
 const Competences = dynamic(() => import("@/components/Competences"), {
   loading: () => <Loading />, // Composant de chargement à afficher pendant le chargement
@@ -57,11 +61,16 @@ export default function Home() {
 
   React.useEffect(() => {
     const local = window.sessionStorage.getItem("cinematicPass");
+    console.log(local);
 
     if (local) {
       setIsCinematic(false);
     }
   }, []);
+
+  React.useEffect(() => {
+    document.querySelector(".cursor").style.display = "flex";
+  }, [isCinematic]);
 
   function isAfterSevenPM() {
     const now = new Date();
