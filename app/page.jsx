@@ -98,9 +98,6 @@ export default function Home() {
 
   return (
     <Suspense fallback={<Loading />}>
-      {isCinematic ? (
-        <Cinematic />
-      ) : (
         <>
           <Nav />
           <Header />
@@ -111,7 +108,6 @@ export default function Home() {
           />
           <Footer />
         </>
-      )}
     </Suspense>
   );
 }
